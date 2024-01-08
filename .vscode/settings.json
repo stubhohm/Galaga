@@ -1,0 +1,5 @@
+{
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--config", "$C:/Users/stubh/Desktop/Coding/Python/pylintrc"],
+  
+}
