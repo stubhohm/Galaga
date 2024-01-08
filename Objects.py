@@ -16,13 +16,13 @@ class Platoon:  # defines a specific group of eight aliens
 
 
 class AlienUnit:  # the uique atributes of each ship unit
-    def __init__(self, name, id, sprite, hp, can_abduct, value):
+    def __init__(self, name, alien_image_group, image_in_cylce, hp, can_abduct, point_value):
         self.name = name
-        self.id = id
-        self.sprite = sprite
+        self.sprite = alien_image_group
+        self.sprite_cycle = image_in_cylce
         self.hp = hp
         self.can_abduct = can_abduct
-        self.value = value
+        self.point_value = point_value
         self.is_alien = True
 
 
@@ -48,5 +48,5 @@ class Missile:
 
 if __name__ == "__main__":
     print(
-        "this main only runs if this file is ran, not if another program executes it: Object"
+        "this main only runs if this file is ran, not if another program executes it: Objects"
     )
