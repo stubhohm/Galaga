@@ -1,7 +1,7 @@
 # game attributes
     # Screen Sizing
-HEIGHT = 1000
-WIDTH = 400
+HEIGHT = 800
+WIDTH = 600
     # Frame Rate
 FPS = 60
 

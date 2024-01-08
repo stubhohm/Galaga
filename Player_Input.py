@@ -3,12 +3,12 @@ import pygame
 
 # collect Key pressed and key released
 def get_key_pressed(event):
-    key_pressed = pygame.event.get_pressed()
+    key_pressed = event
     return key_pressed
 
 
 def get_key_released(event):
-    if event.type == pygame.KEYUP:
+    if event == pygame.KEYUP:
         # gives me the key number
         key_released = event.Key
         return key_released
