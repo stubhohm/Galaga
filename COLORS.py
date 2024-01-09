@@ -1,6 +1,6 @@
 # Colors
-WHITE = (255,255,255)
-BLACK = (0,0,0)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
 
 if __name__ == "__main__":

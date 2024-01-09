@@ -1,6 +1,13 @@
 import math
 
-def bezier_curve(starting_point, starting_control_point, finishing_point, finishing_control_point, time_step):
+
+def bezier_curve(
+    starting_point,
+    starting_control_point,
+    finishing_point,
+    finishing_control_point,
+    time_step,
+):
     P0 = starting_point
     P1 = starting_control_point
     P2 = finishing_point
@@ -18,14 +25,33 @@ def bezier_curve(starting_point, starting_control_point, finishing_point, finish
     - (x, y): Position on the curve at time t.
     - (dx, dy): Slope (derivative) of the curve at time t.
     """
-    x = (1 - t)**3 * P0[0] + 3 * (1 - t)**2 * t * P1[0] + 3 * (1 - t) * t**2 * P2[0] + t**3 * P3[0]
-    y = (1 - t)**3 * P0[1] + 3 * (1 - t)**2 * t * P1[1] + 3 * (1 - t) * t**2 * P2[1] + t**3 * P3[1]
+    x = (
+        (1 - t) ** 3 * P0[0]
+        + 3 * (1 - t) ** 2 * t * P1[0]
+        + 3 * (1 - t) * t**2 * P2[0]
+        + t**3 * P3[0]
+    )
+    y = (
+        (1 - t) ** 3 * P0[1]
+        + 3 * (1 - t) ** 2 * t * P1[1]
+        + 3 * (1 - t) * t**2 * P2[1]
+        + t**3 * P3[1]
+    )
 
     # Calculate the derivatives for the slope
-    dx = 3 * (1 - t)**2 * (P1[0] - P0[0]) + 6 * (1 - t) * t * (P2[0] - P1[0]) + 3 * t**2 * (P3[0] - P2[0])
-    dy = 3 * (1 - t)**2 * (P1[1] - P0[1]) + 6 * (1 - t) * t * (P2[1] - P1[1]) + 3 * t**2 * (P3[1] - P2[1])
+    dx = (
+        3 * (1 - t) ** 2 * (P1[0] - P0[0])
+        + 6 * (1 - t) * t * (P2[0] - P1[0])
+        + 3 * t**2 * (P3[0] - P2[0])
+    )
+    dy = (
+        3 * (1 - t) ** 2 * (P1[1] - P0[1])
+        + 6 * (1 - t) * t * (P2[1] - P1[1])
+        + 3 * t**2 * (P3[1] - P2[1])
+    )
 
     return (x, y), (dx, dy)
+
 
 if __name__ == "__main__":
     print(
