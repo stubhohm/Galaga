@@ -2,12 +2,12 @@ import pygame
 from CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHTER_SPEED
 
 
-class Armada:  # defines the entire alien fleet for a level
+class Alien_Armada:  # defines the entire alien fleet for a level
     def __init__(self, platoons):
         self.platoons = platoons
 
 
-class Platoon:  # defines a specific group of eight aliens
+class Alien_Platoon:  # defines a specific group of eight aliens
     def __init__(self, platoon_id, units, path):
         # position within the Armada
         self.platoon_id = platoon_id
@@ -16,12 +16,28 @@ class Platoon:  # defines a specific group of eight aliens
         self.path = path
 
 
-class AlienUnit:  # the uique atributes of each ship unit
+class Alien_Unit:  # the uique atributes of each ship unit
     def __init__(
-        self, name, alien_image_group, image_in_cylce, hp, can_abduct, point_value, rotation
+        self,
+        name,
+        id,
+        image_in_cylce,
+        hp,
+        can_abduct,
+        point_value,
+        rotation,
+        x,
+        y,
+        d_x,
+        d_y,
     ):
         self.name = name
-        self.sprite = alien_image_group
+        self.id = id
+        self.sprite = id
+        self.x = x
+        self.y = y
+        self.d_x = d_x
+        self.d_y = d_y
         self.sprite_cycle = image_in_cylce
         self.hp = hp
         self.can_abduct = can_abduct
@@ -31,6 +47,7 @@ class AlienUnit:  # the uique atributes of each ship unit
         self.is_missile = False
         self.is_fighter = False
 
+
 class Alien_Missile:
     def __init__(self, sprite, position_x, position_y):
         self.sprite = sprite
@@ -39,25 +56,7 @@ class Alien_Missile:
         self.rotation = 0
         self.is_alien = True
         self.is_missile = True
-
-# define the player class
-class Player:
-    # attributes for the player
-    def __init__(self, name, lives, sprite, score, position_x, double_fighter, active):
-        self.name = name
-        self.lives = lives
-        self.sprite = sprite
-        self.score = score
-        #y position is a constant
-        self.position_x = position_x
-        self.position_y = FIGHTER_Y
-        self.double_fighter = double_fighter
-        self.active = active
-        self.rotation = 0
-        self.is_alien = False
-        self.is_fighter = True
-        self.is_missile = False
-        self.speed_x = FIGHTER_SPEED
+        self.speed_y = MISSILE_SPEED * -1
 
 
 class Missile:
@@ -71,6 +70,32 @@ class Missile:
         self.is_missile = True
         self.is_fighter = False
         self.speed_y = MISSILE_SPEED
+
+
+class Active_Missiles:
+    def __init__(self, missile, is_player_list):
+        self.missile = missile
+        self.is_player_list = is_player_list
+
+
+# define the player class
+class Player:
+    # attributes for the player
+    def __init__(self, name, lives, sprite, score, position_x, double_fighter, active):
+        self.name = name
+        self.lives = lives
+        self.sprite = sprite
+        self.score = score
+        # y position is a constant
+        self.position_x = position_x
+        self.position_y = FIGHTER_Y
+        self.double_fighter = double_fighter
+        self.active = active
+        self.rotation = 0
+        self.is_alien = False
+        self.is_fighter = True
+        self.is_missile = False
+        self.speed_x = FIGHTER_SPEED
 
 
 if __name__ == "__main__":

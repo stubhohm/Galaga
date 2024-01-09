@@ -1,26 +1,27 @@
 # game attributes
-    # Screen Sizing 
-    # all other scaling will be derived from height and width
+# Screen Sizing
+# all other scaling will be derived from height and width
 
 HEIGHT = 800
 WIDTH = 600
-    # Frame Rate
+# Frame Rate
 FPS = 60
 
+PIXEL_ART_SCALE = 32
 # sprite sizing
-ALIEN_HEIGHT = HEIGHT / 8 
-ALIEN_WIDTH = WIDTH / 6
-FIGHTER_HEIGHT = HEIGHT / 8
-FIGHTER_WIDTH = WIDTH / 6
-MISSILE_HEIGHT = 100
-MISSILE_WIDTH = 200
+ALIEN_HEIGHT = PIXEL_ART_SCALE * 2
+ALIEN_WIDTH = PIXEL_ART_SCALE * 2
+FIGHTER_HEIGHT = PIXEL_ART_SCALE * 4
+FIGHTER_WIDTH = PIXEL_ART_SCALE * 4
+MISSILE_HEIGHT = PIXEL_ART_SCALE * 3
+MISSILE_WIDTH = PIXEL_ART_SCALE * 3
 
 # fighter y position
 FIGHTER_Y = HEIGHT * 7 / 8
 
 # scaled movement
 FIGHTER_SPEED = WIDTH / 200
-MISSILE_SPEED = HEIGHT / 100
+MISSILE_SPEED = HEIGHT / 200
 
 
 if __name__ == "__main__":
