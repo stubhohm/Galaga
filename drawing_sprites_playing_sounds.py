@@ -1,6 +1,11 @@
+from Sprite_Manipulation import scale_sprite
 
 #draw sprite
-def draw_sprite(WINDOW, sprite, x_position, y_position,centered):
+def draw_sprite(WINDOW, object,centered):
+    scale_sprite(object)
+    sprite = object.sprite
+    x = object.position_x
+    y = object.position_y
     sprite_size = sprite.get_size()
     if centered:
         a = sprite_size[0] / 2
@@ -8,7 +13,7 @@ def draw_sprite(WINDOW, sprite, x_position, y_position,centered):
     else:
         a = b = 0
     
-    WINDOW.blit(sprite,(x_position - a, y_position - b))
+    WINDOW.blit(sprite,(x - a, y - b))
 
 #draw text
 def draw_text(WINDOW, text, font, text_color, x_positon, y_position, centered):

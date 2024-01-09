@@ -62,8 +62,11 @@ Alien_Image = [
 ]
 
 # fighter images
-fighter_image = pygame.image.load("Sprites//Fighter//fighter_1.png")
-double_fighter_image = pygame.image.load("Sprites//Fighter//fighter_2.png")
+fighter_image = [
+    pygame.image.load("Sprites//Fighter//fighter.png"),
+    pygame.image.load("Sprites//Fighter//double_fighter.png")
+]
+
 fighter_missile = pygame.image.load("Sprites//Fighter//fighter_missile.png")
 # same exlposion as aliens, might change later
 fighter_explosion = [
