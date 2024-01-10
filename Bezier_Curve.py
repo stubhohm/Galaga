@@ -57,10 +57,10 @@ def bezier_curve(bezier_pair, time_step):
         angle_degrees = math.degrees(angle_radians)
         angle_degrees = angle_degrees
     else:
-        if dx > 0:
-            angle_degrees = 00
-        else:
+        if dy > 0:
             angle_degrees = 90
+        else:
+            angle_degrees = 270
     if dy < 0:
         angle_degrees = angle_degrees + 180
     

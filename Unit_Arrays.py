@@ -18,18 +18,18 @@ unit_arrays = [
     [1, 1, 1, 1]  
 ]
 
-
+# these will get tweaked after positioning function is completed
 start_time = [
     0,
     0,
-    300,
-    347,
-    500,
-    547,
+    200,
+    232,
+    400,
+    432,
+    600,
+    632,
     800,
-    847,
-    1000,
-    1047
+    832
 ]
 
 platoon_paths = [

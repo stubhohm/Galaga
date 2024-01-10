@@ -24,7 +24,7 @@ def fire_missile(player, player_missile_list, key_released):
         if len(player_missile_list.missile) == 0:
             player_missile_list.missile = add_missile(player_missile_list, player)
         elif player_missile_list.missile[0].position_y < (
-            player.position_y - (HEIGHT / 6)
+            player.position_y - (HEIGHT *3 / 8)
         ):
             player_missile_list.missile = add_missile(player_missile_list, player)
             # if a missile is fired it joins the class active missile at the end of the current active missile list

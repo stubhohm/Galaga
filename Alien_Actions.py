@@ -1,7 +1,3 @@
-# top three only needed for path visualization
-from Services import WINDOW
-import pygame
-from COLORS import RED, WHITE
 
 from Classes import Alien_Armada, Alien_Platoon
 from Unit_Arrays import unit_arrays, start_time
@@ -37,6 +33,7 @@ def plot_units(platoon, flight_path, time):
         else:
             k = 1
             j = 0
+        step_speed = 0.003
         for i in range(len(platoon.unit)):
             if platoon.unit[i].flight_is_completed != True:
                 # get its curve position and rotation and move to the next unit minus some time step
@@ -54,8 +51,8 @@ def plot_units(platoon, flight_path, time):
                 platoon.unit[i].position_x = x
                 platoon.unit[i].position_y = y 
                 platoon.unit[i].rotation = rotation
-                platoon.unit[i].path_time = platoon.unit[i].path_time + 0.002 * flight_path_step_speed[k][j]
-        platoon.path_time = platoon.path_time + 0.002 * flight_path_step_speed[k][j]
+                platoon.unit[i].path_time = platoon.unit[i].path_time + step_speed * flight_path_step_speed[k][j]
+        platoon.path_time = platoon.path_time + step_speed * flight_path_step_speed[k][j]
 
 
 def platoon_movement(platoon, i, time):

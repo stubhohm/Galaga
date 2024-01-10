@@ -31,6 +31,7 @@ def clean_missile_list(active_missile_list):
         ):
             # truncate off values that are off screen
             active_missile_list.missile = active_missile_list.missile[:i]
+            break
     return active_missile_list
 
 
