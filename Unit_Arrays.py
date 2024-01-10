@@ -1,3 +1,5 @@
+from CONSTANTS import HEIGHT, WIDTH
+
 # bumble bee == 1
 # butterfly == 2
 # galaga == 3
@@ -43,4 +45,21 @@ platoon_paths = [
     1,
     2,
     2
+]
+
+platoon_final_positions = [
+    [WIDTH * 8/ 16, HEIGHT * 7 / 16],
+    [WIDTH * 8/ 16, HEIGHT * 5 / 16],
+    [WIDTH * 7/ 16, HEIGHT * 4 / 16],
+    [WIDTH * 9/ 16, HEIGHT * 4 / 16],
+    [WIDTH * 11/ 16, HEIGHT * 5 / 16],
+    [WIDTH * 5/ 16, HEIGHT * 5 / 16],
+    [WIDTH * 7/ 16, HEIGHT * 7 / 16],
+    [WIDTH * 9/ 16, HEIGHT * 7 / 16],
+    [WIDTH * 6/ 16, HEIGHT * 7 / 16],
+    [WIDTH * 10/ 16, HEIGHT * 7 / 16],
+]
+
+unit_offset = [
+    [(1,2),(1,2),(1,2),(1,2)],[(1,2),(1,2),(1,2),(1,2)]
 ]
