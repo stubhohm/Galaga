@@ -1,4 +1,6 @@
+import pygame
 from Sprite_Manipulation import scale_sprite
+from CONSTANTS import HEIGHT, WIDTH
 
 
 # draw sprite
@@ -13,8 +15,25 @@ def draw_sprite(WINDOW, object, centered):
         b = sprite_size[1] / 2
     else:
         a = b = 0
-
+    if not isinstance(x, (int, float)):
+        x = - WIDTH / 4
+    if not isinstance(y, (int, float)):
+        y = HEIGHT /2
     WINDOW.blit(sprite, (x - a, y - b))
+
+def draw_image(WINDOW, image, pos_x , pos_y, scale_x, scale_y, rotation, centered):
+    image = pygame.transform.rotate(image,0)
+    image = pygame.transform.scale(image,(scale_x, scale_y))
+    image = pygame.transform.rotate(image,rotation)
+    image_size = image.get_size()
+    if centered:
+        a = image_size[0] / 2
+        b = image_size[1] / 2
+    else:
+        a = 0
+        b = 0
+
+    WINDOW.blit(image, (pos_x - a, pos_y - b))
 
 
 # draw text

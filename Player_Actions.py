@@ -1,9 +1,6 @@
 import pygame
 from CONSTANTS import WIDTH, HEIGHT
 from Object_Movement import object_movement
-
-# from Player import missile
-# from Lists import player_missile_list
 from List_Maniplution import add_missile
 
 
@@ -25,17 +22,12 @@ def player_movement(key_pressed, player):
 def fire_missile(player, player_missile_list, key_released):
     if key_released == [pygame.K_SPACE][0]:
         if len(player_missile_list.missile) == 0:
-            player_missile_list.missile = add_missile(player_missile_list)
+            player_missile_list.missile = add_missile(player_missile_list, player)
         elif player_missile_list.missile[0].position_y < (
             player.position_y - (HEIGHT / 6)
         ):
-            player_missile_list.missile = add_missile(player_missile_list)
-            player_missile_list.missile[0].position_x = player.position_x
-            player_missile_list.missile[0].position_y = player.position_y - (
-                HEIGHT / 30
-            )
+            player_missile_list.missile = add_missile(player_missile_list, player)
             # if a missile is fired it joins the class active missile at the end of the current active missile list
-    return player_missile_list
 
 
 if __name__ == "__main__":

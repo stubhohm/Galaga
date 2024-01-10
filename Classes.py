@@ -3,17 +3,18 @@ from CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHTER_SPEED
 
 
 class Alien_Armada:  # defines the entire alien fleet for a level
-    def __init__(self, platoons):
-        self.platoons = platoons
+    def __init__(self, platoon):
+        self.platoon = platoon
 
 
 class Alien_Platoon:  # defines a specific group of eight aliens
-    def __init__(self, platoon_id, units, path):
+    def __init__(self, platoon_id, unit, start_time, path_time):
         # position within the Armada
         self.platoon_id = platoon_id
         # each ship and its rank in the platoon
-        self.units = units
-        self.path = path
+        self.unit = unit
+        self.start_time = start_time
+        self.path_time = path_time
 
 
 class Alien_Unit:  # the uique atributes of each ship unit
@@ -26,16 +27,18 @@ class Alien_Unit:  # the uique atributes of each ship unit
         can_abduct,
         point_value,
         rotation,
-        x,
-        y,
+        position_x,
+        position_y,
         d_x,
         d_y,
+        completed,
+        path_time
     ):
         self.name = name
         self.id = id
         self.sprite = id
-        self.x = x
-        self.y = y
+        self.position_x = position_x
+        self.position_y = position_y
         self.d_x = d_x
         self.d_y = d_y
         self.sprite_cycle = image_in_cylce
@@ -46,6 +49,8 @@ class Alien_Unit:  # the uique atributes of each ship unit
         self.rotation = rotation
         self.is_missile = False
         self.is_fighter = False
+        self.flight_is_completed = completed
+        self.path_time = path_time
 
 
 class Alien_Missile:
@@ -97,7 +102,12 @@ class Player:
         self.is_missile = False
         self.speed_x = FIGHTER_SPEED
 
-
+class Flight_Path:
+    def __init__(self, name, path_id, platoon, completed):
+        self.name = name
+        self.path = path_id
+        self.platoon = platoon
+        self.is_completed = completed
 if __name__ == "__main__":
     print(
         "this main only runs if this file is ran, not if another program executes it: Objects"

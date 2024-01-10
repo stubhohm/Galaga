@@ -17,10 +17,11 @@ def scale_sprite(object):
     else:
         if object.is_alien:
             sprite = Alien_Image[object.id - 1]
-            object.sprite = pygame.transform.rotate(sprite[0], object.rotation)
+            object.sprite = pygame.transform.rotate(sprite[0], 0)
             object.sprite = pygame.transform.scale(
                 object.sprite, (ALIEN_WIDTH, ALIEN_HEIGHT)
             )
+            object.sprite = pygame.transform.rotate(object.sprite, object.rotation)
 
         if object.is_fighter:
             object.sprite = pygame.transform.scale(
