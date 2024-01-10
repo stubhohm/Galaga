@@ -37,6 +37,8 @@ def main():
         draw_window(player_missile_list, player, alien_missile_list, alien_armada)
         pygame.display.update()
         time = time + 1
+        if time % 10 == 0:
+            a = 0
 
 
 if __name__ == "__main__":

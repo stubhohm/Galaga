@@ -38,24 +38,32 @@ def bezier_curve(bezier_pair, time_step):
     ))
 
     # Calculate the derivatives for the slope
-    dy = int((
+    dx = int((
         3 * (1 - t) ** 2 * (P1[0] - P0[0])
         + 6 * (1 - t) * t * (P2[0] - P1[0])
         + 3 * t**2 * (P3[0] - P2[0])
     ))
-    dx = int((
+    dy = int((
         3 * (1 - t) ** 2 * (P1[1] - P0[1])
         + 6 * (1 - t) * t * (P2[1] - P1[1])
         + 3 * t**2 * (P3[1] - P2[1])
     ))
-    if dx !=0:
-        angle_radians = math.atan(dy/dx)
+    if dy == 0:
+        a = 0
+    if dx == 0:
+        a = 0
+    if dy !=0:
+        angle_radians = math.atan(dx/dy)
         angle_degrees = math.degrees(angle_radians)
+        angle_degrees = angle_degrees
     else:
-        if dy > 0:
-            angle_degrees = 270
+        if dx > 0:
+            angle_degrees = 00
         else:
             angle_degrees = 90
+    if dy < 0:
+        angle_degrees = angle_degrees + 180
+    
     x = int(x)
     y = int(y)
     angle_degrees = int(angle_degrees)

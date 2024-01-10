@@ -19,6 +19,7 @@ lib/
 lib64/
 parts/
 __pycache__/
+__pycache__
 sdist/
 var/
 wheels/

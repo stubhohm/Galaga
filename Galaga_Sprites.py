@@ -17,10 +17,10 @@ butterfly_image = [
     pygame.image.load("Sprites//Aliens//butterfly_2.png"),
 ]
 galaga_image = [
-    pygame.image.load("Sprites//Aliens//galaga_1.png"),
-    pygame.image.load("Sprites//Aliens//galaga_2.png"),
-    pygame.image.load("Sprites//Aliens//galaga_damaged_1.png"),
-    pygame.image.load("Sprites//Aliens//galaga_damaged_2.png"),
+    pygame.transform.rotate(pygame.image.load("Sprites//Aliens//galaga_1.png"),180),
+    pygame.transform.rotate(pygame.image.load("Sprites//Aliens//galaga_2.png"),180),
+    pygame.transform.rotate(pygame.image.load("Sprites//Aliens//galaga_damaged_1.png"),180),
+    pygame.transform.rotate(pygame.image.load("Sprites//Aliens//galaga_damaged_2.png"),180),
 ]
 scorpion_image = [
     pygame.image.load("Sprites//Aliens//scorpion_1.png"),
