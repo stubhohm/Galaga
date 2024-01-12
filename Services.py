@@ -2,11 +2,10 @@ import pygame
 from CONSTANTS import WIDTH, HEIGHT
 from COLORS import BLACK, WHITE
 from drawing_sprites_playing_sounds import draw_sprite, draw_image, draw_text, play_sound
+from Star_Drawing import locate_stars
 from Galaga_Sprites import fighter_image
 
 # Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
 
 # Create Display
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -15,9 +14,10 @@ pygame.display.set_caption("Galaga")
 def fill_window():
     WINDOW.fill((BLACK))
 
-def draw_window(player_missile_list, player, alien_missile_list, alien_armada):
+def draw_window(player_missile_list, player, alien_missile_list, alien_armada, star_clusters, time):
     WINDOW.fill((BLACK))
-    
+    for i in range(len(star_clusters)):
+        locate_stars(star_clusters[i], time)
     for i in range(len(alien_armada.platoon)):
         for j in range(len(alien_armada.platoon[i].unit)):
             draw_sprite(WINDOW, alien_armada.platoon[i].unit[j], True)

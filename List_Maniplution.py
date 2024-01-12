@@ -23,7 +23,6 @@ def add_missile(active_missile_list, shooter):
     new_missile.position_y = shooter.position_y
     return new_active_missile_list
 
-
 def clean_missile_list(active_missile_list):
     for i in range(len(active_missile_list.missile)):
         if active_missile_list.missile[i].position_y < -(2 * MISSILE_HEIGHT) or (
@@ -34,7 +33,18 @@ def clean_missile_list(active_missile_list):
             break
     return active_missile_list
 
-
+def remove_missile(missile_list, missile_rank):
+    # if alien, set y to Height * 2
+    # if fighter, set y to Height * - 2
+    if missile_list.missile[missile_rank].is_alien:
+        missile_list.missile[missile_rank].position_y = HEIGHT * 2
+    else:
+        missile_list.missile[missile_rank].position_y = HEIGHT * -2
+    # bubble it to the end of the list
+    for i in range(missile_rank, len(missile_list.missile) - 1 ):
+        holding_missile = missile_list.missile[i + 1]
+        missile_list.missile[i + 1] = missile_list.missile[i]
+        missile_list.missile[i] = holding_missile
 if __name__ == "__main__":
     print(
         "this main only runs if this file is ran, not if another program executes it: List_Manipulation"

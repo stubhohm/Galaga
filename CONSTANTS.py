@@ -23,8 +23,15 @@ FIGHTER_Y = HEIGHT * 7 / 8
 FIGHTER_SPEED = WIDTH / 200
 MISSILE_SPEED = HEIGHT / 64
 
+# alien x and y offsets
+UNIT_OFFSET_X = WIDTH / 32
+UNIT_OFFSET_Y = HEIGHT / 64
+
+def main():
+    print("seems pretty constant to me")
 
 if __name__ == "__main__":
+    main()
     print(
         "this main only runs if this file is ran, not if another program executes it: Constants"
     )

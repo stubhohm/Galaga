@@ -8,13 +8,17 @@ class Alien_Armada:  # defines the entire alien fleet for a level
 
 
 class Alien_Platoon:  # defines a specific group of eight aliens
-    def __init__(self, platoon_id, unit, start_time, path_time):
+    def __init__(self, platoon_id, unit, start_time, path_time, final_position, flight_path = 0, expanded_final_position = 0, expansion_scaler = 0):
         # position within the Armada
         self.platoon_id = platoon_id
         # each ship and its rank in the platoon
         self.unit = unit
         self.start_time = start_time
         self.path_time = path_time
+        self.final_position = final_position
+        self.flight_path = flight_path
+        self.expanded_final_position = expanded_final_position
+        self.expansion_scaler = expansion_scaler
 
 
 class Alien_Unit:  # the uique atributes of each ship unit
@@ -26,13 +30,16 @@ class Alien_Unit:  # the uique atributes of each ship unit
         hp,
         can_abduct,
         point_value,
-        rotation,
-        position_x,
-        position_y,
-        d_x,
-        d_y,
-        completed,
-        path_time
+        rotation = 0,
+        position_x = None,
+        position_y = None,
+        d_x = None,
+        d_y = None,
+        entry_flight_is_completed = False,
+        station_flight_is_completed = False,
+        path_time = 0,
+        final_position = None,
+        expanded_final_position = None,
     ):
         self.name = name
         self.id = id
@@ -41,7 +48,7 @@ class Alien_Unit:  # the uique atributes of each ship unit
         self.position_y = position_y
         self.d_x = d_x
         self.d_y = d_y
-        self.sprite_cycle = image_in_cylce
+        self.image_in_cycle = image_in_cylce
         self.hp = hp
         self.can_abduct = can_abduct
         self.point_value = point_value
@@ -49,19 +56,23 @@ class Alien_Unit:  # the uique atributes of each ship unit
         self.rotation = rotation
         self.is_missile = False
         self.is_fighter = False
-        self.flight_is_completed = completed
+        self.entry_flight_is_completed = entry_flight_is_completed
+        self.station_flight_is_completed = station_flight_is_completed
         self.path_time = path_time
+        self.final_position = final_position
+        self.expanded_final_position = expanded_final_position
 
 
 class Alien_Missile:
-    def __init__(self, sprite, position_x, position_y):
+    def __init__(self, sprite, position_x, position_y, d_x):
         self.sprite = sprite
         self.position_x = position_x
         self.position_y = position_y
         self.rotation = 0
         self.is_alien = True
         self.is_missile = True
-        self.speed_y = MISSILE_SPEED * -1
+        self.d_y = MISSILE_SPEED * -0.25
+        self.d_x = d_x
 
 
 class Missile:
@@ -74,7 +85,7 @@ class Missile:
         self.is_alien = False
         self.is_missile = True
         self.is_fighter = False
-        self.speed_y = MISSILE_SPEED
+        self.d_y = MISSILE_SPEED
 
 
 class Active_Missiles:
@@ -108,6 +119,13 @@ class Flight_Path:
         self.path = path_id
         self.platoon = platoon
         self.is_completed = completed
+
+class Stars:
+    def __init__(self, name, array, speed):
+        self.name = name
+        self.array = array
+        self.speed = speed
+        
 if __name__ == "__main__":
     print(
         "this main only runs if this file is ran, not if another program executes it: Objects"

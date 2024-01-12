@@ -37,7 +37,7 @@ bezier_points = [
     ],
     [
         (WIDTH * 7 / 8, HEIGHT * 4 / 8), (WIDTH * 7 / 8, HEIGHT * 5 / 8),
-        (WIDTH * 11 / 16, HEIGHT * 5 / 8), (WIDTH * 5 / 8, HEIGHT * 4 / 8) 
+        (WIDTH * 5 / 8, HEIGHT * 5 / 8), (WIDTH * 5 / 8, HEIGHT * 4 / 8) 
     ],
     
     # come in the top off set to the right side
@@ -49,7 +49,7 @@ bezier_points = [
     ],
     [
         (WIDTH * 1 / 8, HEIGHT * 4 / 8), (WIDTH * 1 / 8, HEIGHT * 5 / 8),
-        (WIDTH * 5 / 16, HEIGHT * 5 / 8), (WIDTH * 3 / 8, HEIGHT * 4 / 8) 
+        (WIDTH * 3 / 8, HEIGHT * 5 / 8), (WIDTH * 3 / 8, HEIGHT * 4 / 8) 
     ],
 
     # come in bottom left

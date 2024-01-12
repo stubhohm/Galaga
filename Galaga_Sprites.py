@@ -47,6 +47,7 @@ alien_explosion = [
     pygame.image.load("Sprites//Aliens//alien_explosion_3.png"),
     pygame.image.load("Sprites//Aliens//alien_explosion_4.png"),
     pygame.image.load("Sprites//Aliens//alien_explosion_5.png"),
+    pygame.image.load("Sprites//blank.png"),
 ]
 
 Alien_Image = [

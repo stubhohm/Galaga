@@ -19,7 +19,7 @@ def player_movement(key_pressed, player):
             player.position_x = WIDTH * 9 / 10
 
 
-def fire_missile(player, player_missile_list, key_released):
+def player_fire_missile(player, player_missile_list, key_released):
     if key_released == [pygame.K_SPACE][0]:
         if len(player_missile_list.missile) == 0:
             player_missile_list.missile = add_missile(player_missile_list, player)
