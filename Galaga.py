@@ -1,10 +1,7 @@
 import pygame
-import math
-import copy
 from CONSTANTS import FPS
-from Sprite_Manipulation import scale_sprite
 from Player_Actions import player_movement, player_fire_missile
-from Services import draw_window, fill_window
+from Services import draw_window
 from Object_Movement import missile_movement
 from Player_Objects import player
 from Alien_Actions import build_alien_armada, alien_movement

@@ -46,7 +46,6 @@ def draw_text(WINDOW, text, font, text_color, x_positon, y_position, centered):
     else:
         a = 0
         b = 0
-
     WINDOW.blit(img, (x_positon - a, y_position - b))
 
 

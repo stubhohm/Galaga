@@ -1,11 +1,4 @@
-class Menu:
-    def __init__(
-        self,
-        name,
-        selected_option,
-    ):
-        self.name = name
-        self.selcected_option = selected_option
+from Classes import Menu
 
 
 title_menu = Menu("Title Menu", 0)

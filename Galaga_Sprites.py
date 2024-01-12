@@ -1,5 +1,4 @@
 import pygame
-from CONSTANTS import ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_HEIGHT, FIGHTER_WIDTH
 
 ## alien ship images
 # aliens also have a unique sprite for when they are hit

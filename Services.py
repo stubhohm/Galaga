@@ -1,6 +1,7 @@
 import pygame
 from CONSTANTS import WIDTH, HEIGHT
 from COLORS import BLACK, WHITE
+from FONTS import *
 from drawing_sprites_playing_sounds import draw_sprite, draw_image, draw_text, play_sound
 from Star_Drawing import locate_stars
 from Galaga_Sprites import fighter_image
@@ -28,6 +29,12 @@ def draw_window(player_missile_list, player, alien_missile_list, alien_armada, s
     for i in range(player.lives - 1):
        draw_image(WINDOW, fighter_image[0], (WIDTH * i / 16), 15 / 16 * HEIGHT, 64, 64, 0, False) 
     draw_sprite(WINDOW, player, True)
+    if player.shots_fired > 0:
+        hit_rate = int((player.hits/player.shots_fired) * 100)
+        hit_rate = str(hit_rate)+ "%"
+        draw_text(WINDOW,hit_rate, text_font,WHITE, WIDTH - WIDTH/8, HEIGHT/16, True)
+    if alien_armada.is_defeated:
+        draw_text(WINDOW,"YOU WIN",text_font,WHITE, WIDTH/2, HEIGHT/2,True)
 
 
 def main():

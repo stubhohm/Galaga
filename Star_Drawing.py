@@ -1,7 +1,7 @@
 import pygame
 import math
 import random
-from COLORS import BLACK, WHITE, OFF_WHITE, FADED_WHITE
+from COLORS import BLACK
 from Classes import Stars
 from CONSTANTS import HEIGHT, WIDTH, FPS
 

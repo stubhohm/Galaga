@@ -1,5 +1,3 @@
-from Player_Objects import missile
-from Alien_Objects import alien_missile
 from CONSTANTS import HEIGHT, MISSILE_HEIGHT
 from Classes import Missile, Alien_Missile
 from Galaga_Sprites import alien_missile_image, fighter_missile
@@ -45,6 +43,8 @@ def remove_missile(missile_list, missile_rank):
         holding_missile = missile_list.missile[i + 1]
         missile_list.missile[i + 1] = missile_list.missile[i]
         missile_list.missile[i] = holding_missile
+
+
 if __name__ == "__main__":
     print(
         "this main only runs if this file is ran, not if another program executes it: List_Manipulation"

@@ -3,7 +3,7 @@ from List_Maniplution import remove_missile
 from Alien_Objects import Alien_Unit
 from Sprite_Manipulation import toggle_boss_galaga_sprite
 
-def alien_takes_damage(unit):
+def alien_takes_damage(unit, player):
     unit.hp = unit.hp - 1
     if unit.hp == 0:
         unit = Alien_Unit(
@@ -24,10 +24,12 @@ def alien_takes_damage(unit):
             None,
             None
             )
+        player.kills = player.kills + 1
+        player.hits = player.hits + 1
     else:
         unit.name = "Damaged Galaga"
+        player.hits = player.hits + 1
         toggle_boss_galaga_sprite(unit)
-
     return unit
 
 def alien_to_player_fighter_collision(alien_armada, player):
@@ -50,7 +52,7 @@ def alien_missile_to_player_fighter_collision(alien_missile_list, player):
 
 def collision_check(player_missile_list,player, alien_missile_list, alien_armada):
     if len(player_missile_list.missile) > 0:
-        player_missile_to_alien_collision(player_missile_list, alien_armada)
+        player_missile_to_alien_collision(player_missile_list, alien_armada, player)
     if len(alien_missile_list.missile) > 0:
         contact = alien_missile_to_player_fighter_collision(alien_missile_list, player)
         if contact:
@@ -85,7 +87,7 @@ def player_collision_calculation(a, b, c, x, y):
     # Check if the point is inside the triangle
     return 0 <= alpha <= 1 and 0 <= beta <= 1 and 0 <= gamma <= 1
 
-def player_missile_to_alien_collision(player_missile_list, alien_armada):
+def player_missile_to_alien_collision(player_missile_list, alien_armada, player):
     y = ALIEN_HEIGHT / 3
     x = ALIEN_WIDTH / 3
     for i in range(len(player_missile_list.missile)):
@@ -97,8 +99,8 @@ def player_missile_to_alien_collision(player_missile_list, alien_armada):
                     if unit.position_y + y > missile.position_y > unit.position_y - y:
                         if unit.position_x + x > missile.position_x > unit.position_x - x:
                             remove_missile(player_missile_list, i)
-                            alien_armada.platoon[j].unit[k] = alien_takes_damage(unit)
-                            a = 0
+                            alien_armada.platoon[j].unit[k] = alien_takes_damage(unit, player)
+
                         
 def main():
     collision = player_collision_calculation((64,0), (0,32), (0,-32), 18, 18)

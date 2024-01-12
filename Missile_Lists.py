@@ -1,6 +1,5 @@
 from Classes import Active_Missiles
 from Player_Objects import missile
-from Alien_Objects import alien_missile
 
 player_missile_list = Active_Missiles([missile], True)
 alien_missile_list = Active_Missiles([missile], False)

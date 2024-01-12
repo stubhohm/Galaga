@@ -1,4 +1,4 @@
-from CONSTANTS import MISSILE_SPEED, FIGHTER_SPEED
+from CONSTANTS import MISSILE_SPEED
 from List_Maniplution import clean_missile_list
 
 
@@ -11,7 +11,7 @@ def object_movement(object, d_x, d_y):
 def missile_movement(missile_list):
     # iterate through all missiles in active player missiles
     for i in range(len(missile_list.missile)):
-        pos_x, pos_y = object_movement(missile_list.missile[i], 0, MISSILE_SPEED * -1)
+        pos_x, pos_y = object_movement(missile_list.missile[i], missile_list.missile[i].d_x, MISSILE_SPEED * -1)
     missile_list = clean_missile_list(missile_list)
 
 
