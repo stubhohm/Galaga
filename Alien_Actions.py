@@ -1,5 +1,5 @@
 import math
-from CONSTANTS import WIDTH, UNIT_OFFSET_X
+from CONSTANTS import WIDTH
 from Classes import Alien_Armada, Alien_Platoon
 from Unit_Arrays import unit_arrays, start_time, platoon_final_position, platoon_expansion_multiple
 from Alien_Objects import build_new_unit, flight_paths
@@ -16,10 +16,19 @@ def alien_explodes(unit):
     plot_unit(unit, x, y, 0)
 
 def alien_movement(armada,time):
+    armada_defeated(armada)
+    if armada.is_defeated != True:
+        for i in range(len(armada.platoon)):
+            if armada.platoon[i].is_defeated != True:
+                platoon_movement(armada.platoon[i], time)
+                toggle_alien_sprite_images(armada.platoon[i], time)
+                armada_expand_contract(armada.platoon[i], time)
+
+def armada_defeated(armada):
     for i in range(len(armada.platoon)):
-        platoon_movement(armada.platoon[i], time)
-        toggle_alien_sprite_images(armada.platoon[i], time)
-        armada_expand_contract(armada.platoon[i], time)
+        if armada.platoon[i].is_defeated != True:
+            return
+    armada.is_defeated == True
 
 def armada_expand_contract(platoon, time):
     amplitude = WIDTH / 600
@@ -100,12 +109,20 @@ def find_position_on_curve (platoon, i, bezier_points):
     )
     return flight_is_completed
 
+def platoon_defeated(platoon):
+    if platoon.is_defeated != True:
+        for i in range(len(platoon.unit)):
+            if platoon.unit[i].id != 9:
+                return
+        platoon.is_defeated == True
+
 def platoon_movement(platoon, time):
     # iterate through the flightpaths and platoons in that path
+    platoon_defeated(platoon)
     for j in range(len(platoon.unit)):
         entry_flight = platoon.unit[j].entry_flight_is_completed
         station_flight = platoon.unit[j].station_flight_is_completed
-        if platoon.unit[j].id == 8:
+        if platoon.unit[j].id == 9:
             alien_explodes(platoon.unit[j])
         if entry_flight != True:
             unit_entry_movement(platoon, j, time)
