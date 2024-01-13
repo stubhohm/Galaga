@@ -4,7 +4,7 @@ from Player_Actions import player_movement, player_fire_missile
 from Services import draw_window
 from Object_Movement import missile_movement
 from Player_Objects import player
-from Alien_Actions import build_alien_armada, alien_movement
+from Alien_Actions import build_alien_armada, alien_armada_behavior
 from Missile_Lists import player_missile_list, alien_missile_list
 from Collisions import collision_check
 from Star_Drawing import generate_stars
@@ -30,7 +30,7 @@ def main():
                 key_released = event.key
         player_movement(key_pressed, player)
         player_fire_missile(player, player_missile_list, key_released)
-        alien_movement(alien_armada,time)
+        alien_armada_behavior(alien_armada,time)
         missile_movement(player_missile_list)
         missile_movement(alien_missile_list)
         collision_check(player_missile_list,player, alien_missile_list, alien_armada)

@@ -1,8 +1,9 @@
 import random
+import copy
 from CONSTANTS import HEIGHT, WIDTH
 
 
-flight_path_step_speed = [
+entry_path_step_speed = [
     [
         6,
         8
@@ -26,8 +27,6 @@ bezier_step_speed = [
     4,
     4
 ]
-
-
 
 bezier_points = [
     # come in the top off set to the left side
@@ -114,6 +113,7 @@ attack_pattern_bezier_points = [
     [[WIDTH * 0 / 8, HEIGHT * 0 / 8],[WIDTH * 0 / 8, HEIGHT * -1 / 16],[WIDTH * -1 / 8,  HEIGHT * -1 / 16],[ WIDTH * -1 / 8, HEIGHT * 0 /8]],
     [[WIDTH * -1 / 8, HEIGHT * 0 / 8],[WIDTH * -1 / 8, HEIGHT * 1/ 8],[WIDTH * 2 / 8, HEIGHT * 2/ 8],[WIDTH * 2 / 8, HEIGHT * 3 / 8]],
     [[WIDTH * 2 / 8, HEIGHT * 3 / 8],[WIDTH * 2 / 8, HEIGHT * 4/ 8],[WIDTH * 6 / 8, HEIGHT * 10/ 8],[WIDTH * 6 / 8, HEIGHT * 9 / 8]],
+    [[WIDTH * 1 / 8, HEIGHT * -3 / 8],[WIDTH * 1 / 8, HEIGHT * -2/ 8],[WIDTH * 0 / 8, HEIGHT * 1/ 8],[WIDTH * 0 / 8, HEIGHT * 0 / 8]]
     ],
     # blue attack pattern 1 base, includes the swoop down and the bottom of the loop
     # last two lines are the blue attack pattern second loop into off screen
@@ -123,9 +123,9 @@ attack_pattern_bezier_points = [
     [[WIDTH * -1 / 8, HEIGHT * 0 / 8],[WIDTH * -1 / 8, HEIGHT * 1/ 8],[WIDTH * 3 / 8, HEIGHT * 2/ 8],[WIDTH * 3 / 8, HEIGHT * 3 / 8]],
     [[WIDTH * 3 / 8, HEIGHT * 3 / 8],[WIDTH * 3 / 8, HEIGHT * 4/ 8],[WIDTH * 4 / 8, HEIGHT * 5/ 8],[WIDTH * 4 / 8, HEIGHT * 6 / 8]],
     [[WIDTH * 4 / 8, HEIGHT * 6 / 8],[WIDTH * 4 / 8, HEIGHT * 7/ 8],[WIDTH * 2 / 8, HEIGHT * 7/ 8],[WIDTH * 2 / 8, HEIGHT * 6 / 8]],
-    [[WIDTH * 3 / 8, HEIGHT * 6 / 8],[WIDTH * 3 / 8, HEIGHT * 5/ 8],[WIDTH * 5 / 8, HEIGHT * 5/ 8],[WIDTH * 5 / 8, HEIGHT * 6 / 8]],
-    [[WIDTH * 5 / 8, HEIGHT * 6 / 8],[WIDTH * 5 / 8, HEIGHT * 7/ 8],[WIDTH * 6 / 8, HEIGHT * 10/ 8],[WIDTH * 6 / 8, HEIGHT * 9 / 8]],
-    ],
+    [[WIDTH * 2 / 8, HEIGHT * 6 / 8],[WIDTH * 2 / 8, HEIGHT * 5/ 8],[WIDTH * 4 / 8, HEIGHT * 5/ 8],[WIDTH * 4 / 8, HEIGHT * 6 / 8]],
+    [[WIDTH * 4 / 8, HEIGHT * 6 / 8],[WIDTH * 4 / 8, HEIGHT * 7/ 8],[WIDTH * 5 / 8, HEIGHT * 10/ 8],[WIDTH * 5 / 8, HEIGHT * 9 / 8]],
+    [[WIDTH * 1 / 8, HEIGHT * -3 / 8],[WIDTH * 1 / 8, HEIGHT * -2/ 8],[WIDTH * 0 / 8, HEIGHT * 1/ 8],[WIDTH * 0 / 8, HEIGHT * 0 / 8]]    ],
     # blue attack pattern 1 base, includes the swoop down and the bottom of the loop
     # 2
     [
@@ -133,14 +133,10 @@ attack_pattern_bezier_points = [
     [[WIDTH * -1 / 8, HEIGHT * 0 / 8],[WIDTH * -1 / 8, HEIGHT * 1/ 8],[WIDTH * 3 / 8, HEIGHT * 2/ 8],[WIDTH * 3 / 8, HEIGHT * 3 / 8]],
     [[WIDTH * 3 / 8, HEIGHT * 3 / 8],[WIDTH * 3 / 8, HEIGHT * 4/ 8],[WIDTH * 4 / 8, HEIGHT * 5/ 8],[WIDTH * 4 / 8, HEIGHT * 6 / 8]],
     [[WIDTH * 4 / 8, HEIGHT * 6 / 8],[WIDTH * 4 / 8, HEIGHT * 7/ 8],[WIDTH * 2 / 8, HEIGHT * 7/ 8],[WIDTH * 2 / 8, HEIGHT * 6 / 8]],
-    ],
-    # blue attack patter 2 finish, returns to starting spot
-    # 3
-    [
     [[WIDTH * 2 / 8, HEIGHT * 6 / 8],[WIDTH * 2 / 8, HEIGHT * 5/ 8],[WIDTH * 0 / 8, HEIGHT * 1/ 8],[WIDTH * 0 / 8, HEIGHT * 0 / 8]],
     ],
     # Boss Galaga attack and abduct
-    # 4
+    # 3
     [
     [[WIDTH * 0 / 8, HEIGHT * 0 / 8],[WIDTH * 0 / 8, HEIGHT * -1/ 8],[WIDTH * -2 / 8, HEIGHT * -1/ 8],[WIDTH * -2 / 8, HEIGHT * 0 / 8]],
     [[WIDTH * -2 / 8, HEIGHT * 0 / 8],[WIDTH * -2 / 8, HEIGHT * 1/ 8],[WIDTH * -2 / 8, HEIGHT * 1 / 8],[WIDTH * -2 / 8, HEIGHT * 2 / 8]],
@@ -148,94 +144,80 @@ attack_pattern_bezier_points = [
     [[WIDTH * -2 / 8, HEIGHT * 2 / 8],[WIDTH * -2 / 8, HEIGHT * 3/ 8],[WIDTH * 0 / 8, HEIGHT * 3/ 8],[WIDTH * 0 / 8, HEIGHT * 2 / 8]],
     [[WIDTH * 0 / 8, HEIGHT * 2 / 8],[WIDTH * 0 / 8, HEIGHT * 1/ 8],[WIDTH * -2 / 8, HEIGHT * 1/ 8],[WIDTH * -2 / 8, HEIGHT * 2 / 8]],
         # swoop down
-    [[WIDTH * -2 / 8, HEIGHT * 2 / 8],[WIDTH * -2 / 8, HEIGHT * 3/ 8],[WIDTH * 4 / 8, HEIGHT * 3/ 8],[WIDTH * 4 / 8, HEIGHT * 4 / 8]],
+    [[WIDTH * -2 / 8, HEIGHT * 2 / 8],[WIDTH * -2 / 8, HEIGHT * 3/ 8],[WIDTH * 4 / 8, HEIGHT * 4/ 8],[WIDTH * 4 / 8, HEIGHT * 5 / 8]],
+    [[WIDTH * 4 / 8, HEIGHT * 5 / 8],[WIDTH * 4 / 8, HEIGHT * 4/ 8],[WIDTH * 0 / 8, HEIGHT * 1/ 8],[WIDTH * 0 / 8, HEIGHT * 0 / 8]],
     ],
     # Boss Galaga attack and no abduct
-    # 5
+    # 4
     [
     [[WIDTH * 0 / 8, HEIGHT * 0 / 8],[WIDTH * 0 / 8, HEIGHT * -1/ 8],[WIDTH * -2 / 8, HEIGHT * -1/ 8],[WIDTH * -2 / 8, HEIGHT * 0 / 8]],
     [[WIDTH * -2 / 8, HEIGHT * 0 / 8],[WIDTH * -2 / 8, HEIGHT * 1/ 8],[WIDTH * -2 / 8, HEIGHT * 1 / 8],[WIDTH * -2 / 8, HEIGHT * 2 / 8]],
     # swoop down
     [[WIDTH * -2 / 8, HEIGHT * 2 / 8],[WIDTH * -2 / 8, HEIGHT * 3/ 8],[WIDTH * 4 / 8, HEIGHT * 3/ 8],[WIDTH * 4 / 8, HEIGHT * 4 / 8]],
         #if attack, fly off bottom
-    [[WIDTH * 4 / 8, HEIGHT * 4 / 8],[WIDTH * 4 / 8, HEIGHT * 5/ 8],[WIDTH * 3 / 8, HEIGHT * 9/ 8],[WIDTH * 3 / 8, HEIGHT * 8 / 8]],
+    [[WIDTH * 4 / 8, HEIGHT * 4 / 8],[WIDTH * 4 / 8, HEIGHT * 5/ 8],[WIDTH * 3 / 8, HEIGHT * 9 / 8],[WIDTH * 3 / 8, HEIGHT * 10 / 8]],
+    [[WIDTH * 1 / 8, HEIGHT * -3 / 8],[WIDTH * 1 / 8, HEIGHT * -2/ 8],[WIDTH * 0 / 8, HEIGHT * 1/ 8],[WIDTH * 0 / 8, HEIGHT * 0 / 8]]
     ],
-    # return to position from the top of the screen
-    # 6
-    [
-    [[WIDTH * 4 / 8, HEIGHT * 4 / 8],[WIDTH * 4 / 8, HEIGHT * 5/ 8],[WIDTH * 0 / 8, HEIGHT * 1/ 8],[WIDTH * 0 / 8, HEIGHT * 0 / 8]],
-    ],
-    # 7
-    # if abducting, return to start
-    [
-    [[WIDTH * 1 / 8, HEIGHT * -2 / 8],[WIDTH * 1 / 8, HEIGHT * -1/ 8],[WIDTH * 0 / 8, HEIGHT * -1/ 8],[WIDTH * 0 / 8, HEIGHT * 0 / 8]]
-    ]
 ]
-
+"""
+    Butterflys only one attack path: id = 1
+        They attack on path (0) and fly off screen
+    Bumblebees have two moves: id = 2
+        They can attack and loop off the bottom of the screen (1),
+        or they can loops back across the screen (2).
+    Boss Galages also have two moves: id = 3
+        They will do an extra flip and try to abduct the player (3)
+        They will fly at the player and just shoot missiles and fly off screen (5)
+    """
 attack_pattern_speed_steps = [
     [
-        [3],[1],[1]
+        [6],[3],[2],[2]
     ],
     [
-        [3],[1],[2],[2],[2],[1]
+        [6],[3],[3],[4],[4],[2],[2]
     ],
     [
-        [3],[1],[2],[2]
+        [6],[3],[3],[4],[2]
     ],
     [
-        [1]
+        [4],[3],[4],[4],[2],[1]
     ],
     [
-        [2],[2],[2],[1],[1]
-    ],
-    [
-        [2],[2],[1],[1]
-    ],
-    [
-        [2]
-    ],
-    [
-        [1]
-    ],
+        [4], [4],[2],[2],[2]
+    ]
 ]
 
 def get_bezier_points(i):
     return bezier_points[i]
 
+def get_bezier_attack_path(path):
+    return attack_pattern_bezier_points[path]
+
 def get_bezier_attack_pattern(unit):
     """
-    a is the start path
-    b is the finishing path
     Butterflys only one attack path: id = 1
-        They attack on path (0) and fly off screen (7) is its only return path
+        They attack on path (0) and fly off screen
     Bumblebees have two moves: id = 2
         They can attack and loop off the bottom of the screen (1),
         or they can loops back across the screen (2).
-        The respective return paths are (7) for off screen, or (3) for on screen
     Boss Galages also have two moves: id = 3
-        They will do an extra flip and try to abduct the player (4)
+        They will do an extra flip and try to abduct the player (3)
         They will fly at the player and just shoot missiles and fly off screen (5)
-        The respective return paths are (6) for abducting, or (7) for off screen
     """
-    a = 0
-    b = 6
-    if unit.id != 3 or unit.id != 1:
-        a = 2
-        b = 3
-        if random.randrange(0,10) > 7:
-            a = 1
-            b = 7
-    if unit.id == 3:
-        a = 4
-        b = 6
-        if random.randrange(0,10) > 6:
-            a = 5
-            b = 7
-    start_pattern_path = attack_pattern_bezier_points[a]
-    start_pattern_speed = attack_pattern_speed_steps[a]
-    finish_pattern_path = attack_pattern_bezier_points[b]
-    finish_pattern_speed = attack_pattern_speed_steps[b]
-    pathing = [start_pattern_path, start_pattern_speed, finish_pattern_path, finish_pattern_speed]
+    id = unit.id
+    path = 0
+    if (id != 2):
+        path = 2
+        if unit.id == 3:
+                path = 3
+                if random.randrange(0,10) > 6:
+                    path = 4
+        elif random.randrange(0,10) > 7:
+            path = 1
+
+    attack_pattern_path = copy.deepcopy(attack_pattern_bezier_points[path])
+    attack_pattern_speed = copy.deepcopy(attack_pattern_speed_steps[path])
+    pathing = [attack_pattern_path, attack_pattern_speed]
     return pathing
 
 def get_bezier_flight_path(i):

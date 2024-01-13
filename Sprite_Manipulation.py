@@ -15,10 +15,10 @@ def toggle_boss_galaga_sprite(boss_galaga):
         else:
             boss_galaga.image_in_cycle = 0
     else:
-        if boss_galaga.image_in_cycle != 2:
-            boss_galaga.image_in_cycle = 2
-        else:
+        if boss_galaga.image_in_cycle == 2 or boss_galaga.image_in_cycle == 1:
             boss_galaga.image_in_cycle = 3
+        else:
+            boss_galaga.image_in_cycle = 2
 
 def toggle_bug_sprite(unit):
     if unit.image_in_cycle == 0:

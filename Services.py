@@ -31,8 +31,8 @@ def draw_window(player_missile_list, player, alien_missile_list, alien_armada, s
     draw_sprite(WINDOW, player, True)
     if player.shots_fired > 0:
         hit_rate = int((player.hits/player.shots_fired) * 100)
-        hit_rate = str(hit_rate)+ "%"
-        draw_text(WINDOW,hit_rate, text_font,WHITE, WIDTH - WIDTH/8, HEIGHT/16, True)
+        hit_rate = "Hit rate: " + str(hit_rate)+ "%"
+        draw_text(WINDOW,hit_rate, text_font,WHITE, 0, 0, False)
     if alien_armada.is_defeated:
         draw_text(WINDOW,"YOU WIN",text_font,WHITE, WIDTH/2, HEIGHT/2,True)
 

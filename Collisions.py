@@ -35,10 +35,12 @@ def alien_takes_damage(unit, player):
             0,
             True,
             True,
+            unit.attack_flight_is_completed,
             0,
             None,
-            None
+            None,
             )
+        
         player.kills = player.kills + 1
         player.hits = player.hits + 1
     else:

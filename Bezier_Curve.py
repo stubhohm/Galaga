@@ -1,20 +1,20 @@
 import math
+import random
 import pygame
 from drawing_sprites_playing_sounds import draw_text
 from FONTS import menu_font
 from Bezier_Arrays import (
     bezier_step_speed, 
     get_bezier_points, 
-    get_bezier_flight_path, 
+    get_bezier_flight_path,
     attack_pattern_bezier_points,
-    attack_pattern_speed_steps
+    attack_pattern_speed_steps    
 )
 from COLORS import BLACK, WHITE, RED, YELLOW
 from CONSTANTS import HEIGHT, WIDTH, FPS
 
 # Create Display for visulaizatoin purposes
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Bezier Curves")
 
 def bezier_curve(bezier_pair, time_step):
     P0 = starting_point = bezier_pair[0]
@@ -77,6 +77,8 @@ def bezier_curve(bezier_pair, time_step):
     x = int(x)
     y = int(y)
     angle_degrees = int(angle_degrees)
+    # for showing control points and such for bezier home seeking curves
+    # draw_window((x,y),bezier_pair)
     return x, y, angle_degrees
 
 def construct_bezier_points(platoon, unit):
@@ -85,15 +87,17 @@ def construct_bezier_points(platoon, unit):
     start_bezier_coordinate = [0,0]
     start_bezier_control = [0,0]
     new_bezier_points = [[0,0,0,0]]
-    bezier_points = get_bezier_flight_path(platoon.flight_path.path)
-    start_bezier_coordinate[0] = unit.position_x
-    start_bezier_coordinate[1] = unit.position_y
+    if unit.station_flight_is_completed != True:
+        bezier_points = get_bezier_flight_path(platoon.flight_path.path)
+    last_curve = len(bezier_points) - 1 
+    start_bezier_coordinate[0] = bezier_points[last_curve][3][0]
+    start_bezier_coordinate[1] = bezier_points[last_curve][3][1]
     if 90 < unit.rotation < 270:
-        a = 1
+        a = -1
     else:
-        a = 1
+        a = -1
     start_bezier_control[1] = start_bezier_coordinate[1] - HEIGHT / 8
-    start_bezier_control[0] = unit.position_x
+    start_bezier_control[0] = start_bezier_coordinate[0]
     end_bezier_coordinate[0] = platoon.expanded_final_position + unit.final_position[0]
     end_bezier_coordinate[1] = platoon.final_position[1] + unit.final_position[1]
     end_bezier_control[0] = end_bezier_coordinate[0]
@@ -103,14 +107,14 @@ def construct_bezier_points(platoon, unit):
     new_bezier_points[0][2] = end_bezier_control
     new_bezier_points[0][3] = end_bezier_coordinate
     # for showing control points and such for bezier home seeking curves
-    draw_window((0,0),new_bezier_points[0]) 
+    # draw_window((0,0),new_bezier_points[0]) 
     return new_bezier_points
 
 def draw_window(coordinate, bezier_points):
     W = WIDTH /3
     H = HEIGHT / 8
-    W = 0
     H = 0
+    W = 0
     x = coordinate[0]
     y = coordinate[1]
     pygame.draw.circle(WINDOW,WHITE,(x + W,y + H),5)
@@ -119,6 +123,17 @@ def draw_window(coordinate, bezier_points):
     pygame.draw.circle(WINDOW,RED,(bezier_points[1][0] + W,bezier_points[1][1] + H),8)
     pygame.draw.circle(WINDOW,YELLOW,(bezier_points[2][0] + W,bezier_points[2][1] + H),8)
     pygame.display.update()
+
+def shift_bezier_array(unit):
+    x_scale_rand = random.randrange(70,100)
+    for i in range(len(unit.path[0])):
+        for j in range(len(unit.path[0][i])):
+            x_mod = x_scale_rand / 100
+            if unit.position_x > WIDTH/2:
+                x_mod = x_mod * -1
+            unit.path[0][i][j][0] = int(x_mod * unit.path[0][i][j][0]) + int(unit.position_x)
+            unit.path[0][i][j][1] = int((unit.path[0][i][j][1] * 7 / 8)) + int(unit.position_y)
+    a = 0
 
 def main():
     clock = pygame.time.Clock()
@@ -134,8 +149,7 @@ def main():
                     break
             for k in range(len(attack_pattern_bezier_points[j])):
                 if run == False:
-                    break
-                WINDOW.fill((BLACK))    
+                    break   
                 time = 0 
                 while time < 1:
                     #bezier_points = get_bezier_points(i)
@@ -153,8 +167,6 @@ def main():
                     if time > .90:
                         a = 0
                 
-
-
 if __name__ == "__main__":
     main()
     print(
