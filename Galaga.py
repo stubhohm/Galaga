@@ -38,7 +38,6 @@ def main():
         pygame.display.update()
         time = time + 1
 
-
 if __name__ == "__main__":
     main()
     print(

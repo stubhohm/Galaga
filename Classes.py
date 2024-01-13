@@ -2,10 +2,11 @@ from CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHTER_SPEED
 
 
 class Alien_Armada:  # defines the entire alien fleet for a level
-    def __init__(self, platoon, is_defeated = False):
+    def __init__(self, platoon, is_defeated = False, active_attackers = 0, game_level = 0):
         self.platoon = platoon
         self.is_defeated = is_defeated
-
+        self.active_attackers = active_attackers
+        self.game_level = game_level
 
 class Alien_Platoon:  # defines a specific group of eight aliens
     def __init__(
@@ -31,7 +32,6 @@ class Alien_Platoon:  # defines a specific group of eight aliens
         self.expansion_scaler = expansion_scaler
         self.is_defeated = is_defeated
 
-
 class Alien_Unit:  # the uique atributes of each ship unit
     def __init__(
         self,
@@ -48,7 +48,9 @@ class Alien_Unit:  # the uique atributes of each ship unit
         d_y = None,
         entry_flight_is_completed = False,
         station_flight_is_completed = False,
+        attack_flight_is_completed = True,
         path_time = 0,
+        path = None,
         final_position = None,
         expanded_final_position = None,
     ):
@@ -69,10 +71,11 @@ class Alien_Unit:  # the uique atributes of each ship unit
         self.is_fighter = False
         self.entry_flight_is_completed = entry_flight_is_completed
         self.station_flight_is_completed = station_flight_is_completed
+        self.attack_flight_is_completed = attack_flight_is_completed
         self.path_time = path_time
+        self.path = path
         self.final_position = final_position
         self.expanded_final_position = expanded_final_position
-
 
 class Alien_Missile:
     def __init__(self, sprite, position_x, position_y, d_x):
@@ -84,7 +87,6 @@ class Alien_Missile:
         self.is_missile = True
         self.d_y = MISSILE_SPEED * -0.25
         self.d_x = d_x
-
 
 class Missile:
     def __init__(self, sprite, position_x, position_y, double_fighter):
@@ -98,7 +100,6 @@ class Missile:
         self.is_fighter = False
         self.d_y = MISSILE_SPEED
         self.d_x = 0
-
 
 class Active_Missiles:
     def __init__(self, missile, is_player_list):
@@ -114,7 +115,6 @@ class Menu:
         self.name = name
         self.selcected_option = selected_option
 
-# define the player class
 class Player:
     # attributes for the player
     def __init__(

@@ -1,12 +1,16 @@
 import math
+import random
 from CONSTANTS import WIDTH
 from Classes import Alien_Armada, Alien_Platoon
 from Unit_Arrays import unit_arrays, start_time, platoon_final_position, platoon_expansion_multiple
 from Alien_Objects import build_new_unit, flight_paths
 from Bezier_Curve import bezier_curve, construct_bezier_points
-from Bezier_Arrays import get_bezier_flight_path, flight_path_step_speed
+from Bezier_Arrays import get_bezier_flight_path, flight_path_step_speed, get_bezier_attack_pattern, attack_pattern_speed_steps
 from Sprite_Manipulation import toggle_alien_sprite_images
 
+def alien_unit_attacks(platoon, unit):
+    bezier_points = unit.path[o]
+    find_position_on_curve(platoon)
 
 def alien_explodes(unit):
     unit.entry_flight_is_completed = True
@@ -16,31 +20,26 @@ def alien_explodes(unit):
     plot_unit(unit, x, y, 0)
 
 def alien_movement(armada,time):
-    armada_defeated(armada)
     if armada.is_defeated != True:
+        select_attackers(armada, time)
         for i in range(len(armada.platoon)):
-            if armada.platoon[i].is_defeated != True:
-                platoon_movement(armada.platoon[i], time)
-                toggle_alien_sprite_images(armada.platoon[i], time)
-                armada_expand_contract(armada.platoon[i], time)
-
-def armada_defeated(armada):
-    for i in range(len(armada.platoon)):
-        if armada.platoon[i].is_defeated != True:
-            return
-    armada.is_defeated == True
-
+            toggle_alien_sprite_images(armada.platoon[i], time)
+            if armada.platoon[i].is_defeated == True:
+                continue           
+            platoon_movement(armada.platoon[i], time)
+            armada_expand_contract(armada.platoon[i], time)
+            
 def armada_expand_contract(platoon, time):
     amplitude = WIDTH / 600
     frequency = 1 / 360
-    expansion_factor = 8
+    expansion_factor = 9
     x_expansion = amplitude + amplitude * math.sin(2 * math.pi * frequency * time)
     platoon.expanded_final_position = (
         platoon.final_position[0] +
         x_expansion * expansion_factor * platoon.expansion_scaler 
     )
     for i in range(len(platoon.unit)):
-        if platoon.unit[i].id != 9:
+        if platoon.unit[i].hp != 0:
             x = platoon.unit[i].final_position[0]
             if x > 0:
                 unit_scaler = expansion_factor / 3
@@ -69,12 +68,13 @@ def build_alien_platoon(i):
         platoon_final_position[i], 
         flight_path, 
         None, #expanded_final_position, this is calculated later
-        platoon_expansion_multiple[i] 
+        platoon_expansion_multiple[i] ,
+        False
         )
     return platoon
 
 def build_alien_armada():
-    armada = Alien_Armada([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    armada = Alien_Armada([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], False)
     for i in range(len(armada.platoon)):
         armada.platoon[i] = build_alien_platoon(i)
     return armada
@@ -109,36 +109,55 @@ def find_position_on_curve (platoon, i, bezier_points):
     )
     return flight_is_completed
 
-def platoon_defeated(platoon):
-    if platoon.is_defeated != True:
-        for i in range(len(platoon.unit)):
-            if platoon.unit[i].id != 9:
-                return
-        platoon.is_defeated == True
+def get_flight_path_step_speed(platoon, i):
+    if platoon.unit[i].attack_flight_is_completed !=True:
+        if isinstance(platoon.unit[i].path[1][0], int):
+            a = 0
+
+
+def make_unit_attacker(unit):
+    if unit.hp == 0:
+        return
+    if unit.attack_flight_is_completed != True:
+        return
+    if unit.entry_flight_is_completed and unit.station_flight_is_completed:
+        unit.path = get_bezier_attack_pattern(unit)
+        unit.attack_flight_is_completed = False
 
 def platoon_movement(platoon, time):
     # iterate through the flightpaths and platoons in that path
-    platoon_defeated(platoon)
     for j in range(len(platoon.unit)):
+        if platoon.unit[j].hp == 0:
+            alien_explodes(platoon.unit[j])
+            continue
         entry_flight = platoon.unit[j].entry_flight_is_completed
         station_flight = platoon.unit[j].station_flight_is_completed
-        if platoon.unit[j].id == 9:
-            alien_explodes(platoon.unit[j])
         if entry_flight != True:
             unit_entry_movement(platoon, j, time)
         elif station_flight != True:
             unit_final_station_movement(platoon, j, platoon.unit[j])
-        elif station_flight and entry_flight == True and platoon.unit[j].id != 9:
+        elif station_flight and entry_flight == True :
             rotation = 180
             x = platoon.expanded_final_position + platoon.unit[j].expanded_final_position
             y = platoon.unit[j].position_y
             plot_unit(platoon.unit[j], x, y, rotation)
-            #write function for static shifting based on platoon final location
 
 def plot_unit(unit, x, y, rotation):
     unit.position_x = x
     unit.position_y = y 
     unit.rotation = rotation
+
+def select_attackers(armada, time):
+    # sets attack frequency
+    if time % 240 == 0:
+        for i in range(armada.game_level + 1):
+            # attacker cap
+            if i > 5:
+                break
+        # picks a psuedo random unit
+            a = random.randrange(0,(len(armada.platoon)) - 1)
+            b = random.randrange(0,(len(armada.platoon[i].unit)) - 1 )
+            make_unit_attacker(armada.platoon[a].unit[b])
 
 def unit_entry_movement(platoon, j, time):
     #drawing curves to see whats going on
@@ -149,7 +168,6 @@ def unit_entry_movement(platoon, j, time):
 
 def unit_final_station_movement(platoon, j, unit):
     bezier_points = construct_bezier_points(platoon,unit)
-    # platoon.unit[j].path_time = platoon.unit[j].path_time + (j * 0.15)
     platoon.unit[j].station_flight_is_completed = find_position_on_curve(platoon, j, bezier_points)
 
 def unit_selection(i, j):

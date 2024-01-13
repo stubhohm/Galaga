@@ -39,16 +39,16 @@ platoon_expansion_multiple = [
 ]
 
 platoon_final_position = [
-    [WIDTH * 4 / 8, HEIGHT * 7 / 16],
-    [WIDTH * 4 / 8, HEIGHT * 6 / 16],
-    [WIDTH * 7 / 16, HEIGHT * 11 / 32],
-    [WIDTH * 9 / 16, HEIGHT * 11 / 32],
-    [WIDTH * 5 / 16, HEIGHT * 6 / 16],
-    [WIDTH * 11 / 16, HEIGHT * 6 / 16],
-    [WIDTH * 3 / 8, HEIGHT * 7 / 16],
-    [WIDTH * 5 / 8, HEIGHT * 7 / 16],
-    [WIDTH * 2 / 8, HEIGHT * 7 / 16],
-    [WIDTH * 6 / 8, HEIGHT * 7 / 16],
+    [WIDTH * 4 / 8, HEIGHT * 4 / 16],
+    [WIDTH * 4 / 8, HEIGHT * 3 / 16],
+    [WIDTH * 7 / 16, HEIGHT * 5 / 32],
+    [WIDTH * 9 / 16, HEIGHT * 5 / 32],
+    [WIDTH * 5 / 16, HEIGHT * 3 / 16],
+    [WIDTH * 11 / 16, HEIGHT * 3 / 16],
+    [WIDTH * 3 / 8, HEIGHT * 4 / 16],
+    [WIDTH * 5 / 8, HEIGHT * 4 / 16],
+    [WIDTH * 2 / 8, HEIGHT * 4 / 16],
+    [WIDTH * 6 / 8, HEIGHT * 4 / 16],
 ]
 
 x = UNIT_OFFSET_X

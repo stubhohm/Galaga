@@ -1,6 +1,14 @@
 import math
 import pygame
-from Bezier_Arrays import bezier_step_speed, get_bezier_points, get_bezier_flight_path
+from drawing_sprites_playing_sounds import draw_text
+from FONTS import menu_font
+from Bezier_Arrays import (
+    bezier_step_speed, 
+    get_bezier_points, 
+    get_bezier_flight_path, 
+    attack_pattern_bezier_points,
+    attack_pattern_speed_steps
+)
 from COLORS import BLACK, WHITE, RED, YELLOW
 from CONSTANTS import HEIGHT, WIDTH, FPS
 
@@ -11,8 +19,8 @@ pygame.display.set_caption("Bezier Curves")
 def bezier_curve(bezier_pair, time_step):
     P0 = starting_point = bezier_pair[0]
     P1 = starting_control_point = bezier_pair[1]
-    P2 = finishing_point = bezier_pair[2]
-    P3 = finishing_control_point = bezier_pair[3]
+    P2 = finishing_control_point = bezier_pair[2]
+    P3 = finishing_point = bezier_pair[3]
     t = time_step
     """
     Calculate the position and slope of a cubic Bézier curve at time t.
@@ -78,30 +86,38 @@ def construct_bezier_points(platoon, unit):
     start_bezier_control = [0,0]
     new_bezier_points = [[0,0,0,0]]
     bezier_points = get_bezier_flight_path(platoon.flight_path.path)
-    start_bezier_coordinate[0] = bezier_points[len(bezier_points) - 1][3][0]
-    start_bezier_coordinate[1] = bezier_points[len(bezier_points) - 1][3][1]
+    start_bezier_coordinate[0] = unit.position_x
+    start_bezier_coordinate[1] = unit.position_y
+    if 90 < unit.rotation < 270:
+        a = 1
+    else:
+        a = 1
     start_bezier_control[1] = start_bezier_coordinate[1] - HEIGHT / 8
-    start_bezier_control[0] = start_bezier_coordinate[0]
+    start_bezier_control[0] = unit.position_x
     end_bezier_coordinate[0] = platoon.expanded_final_position + unit.final_position[0]
     end_bezier_coordinate[1] = platoon.final_position[1] + unit.final_position[1]
     end_bezier_control[0] = end_bezier_coordinate[0]
-    end_bezier_control[1] = end_bezier_coordinate[1] - HEIGHT / 8
+    end_bezier_control[1] = end_bezier_coordinate[1] + HEIGHT / 8
     new_bezier_points[0][0] = start_bezier_coordinate
     new_bezier_points[0][1] = start_bezier_control
-    new_bezier_points[0][3] = end_bezier_control
-    new_bezier_points[0][2] = end_bezier_coordinate
+    new_bezier_points[0][2] = end_bezier_control
+    new_bezier_points[0][3] = end_bezier_coordinate
     # for showing control points and such for bezier home seeking curves
-    # draw_window((0,0),new_bezier_points[0]) 
+    draw_window((0,0),new_bezier_points[0]) 
     return new_bezier_points
 
 def draw_window(coordinate, bezier_points):
+    W = WIDTH /3
+    H = HEIGHT / 8
+    W = 0
+    H = 0
     x = coordinate[0]
     y = coordinate[1]
-    pygame.draw.circle(WINDOW,WHITE,(x,y),5)
-    pygame.draw.line(WINDOW,WHITE,(bezier_points[1]),(bezier_points[0]),2)
-    pygame.draw.line(WINDOW,WHITE,(bezier_points[3]),(bezier_points[2]),2)
-    pygame.draw.circle(WINDOW,RED,(bezier_points[1]),8)
-    pygame.draw.circle(WINDOW,YELLOW,(bezier_points[2]),8)
+    pygame.draw.circle(WINDOW,WHITE,(x + W,y + H),5)
+    pygame.draw.line(WINDOW,WHITE,(bezier_points[1][0] + W, bezier_points[1][1] + H),(bezier_points[0][0] + W ,bezier_points[0][1] + H),2)
+    pygame.draw.line(WINDOW,WHITE,(bezier_points[3][0] + W, bezier_points[3][1] + H),(bezier_points[2][0] + W ,bezier_points[2][1] + H),2)
+    pygame.draw.circle(WINDOW,RED,(bezier_points[1][0] + W,bezier_points[1][1] + H),8)
+    pygame.draw.circle(WINDOW,YELLOW,(bezier_points[2][0] + W,bezier_points[2][1] + H),8)
     pygame.display.update()
 
 def main():
@@ -109,22 +125,35 @@ def main():
     run = True
     time = 0
     i = 0
-    WINDOW.fill((BLACK))
     while run:
         clock.tick(FPS)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
         current_point = [0,0,0]
-        bezier_points = get_bezier_points(i)
-        current_point = bezier_curve(bezier_points, time)
-        draw_window((current_point[0],current_point[1]), bezier_points)
-        time = time + 0.005 * bezier_step_speed[i]
-        if time > 1:
-            time = 0 
-            i = i + 1
-        if i > 9:
-           i = 0
+        for j in range(len(attack_pattern_bezier_points)):
+            WINDOW.fill((BLACK))
+            if run == False:
+                    break
+            for k in range(len(attack_pattern_bezier_points[j])):
+                if run == False:
+                    break
+                WINDOW.fill((BLACK))    
+                time = 0 
+                while time < 1:
+                    #bezier_points = get_bezier_points(i)
+                    bezier_points = attack_pattern_bezier_points[j][k]
+                    current_point = bezier_curve(bezier_points, time)
+                    draw_window((current_point[0],current_point[1]), bezier_points)
+                    viewing = "Currently Viewing Pattern: "+ str( + j + 1) +" Step:"+ str(k + 1)
+                    draw_text(WINDOW, viewing, menu_font, WHITE, WIDTH/2, HEIGHT - HEIGHT/8, True)
+                    step_speed = attack_pattern_speed_steps[j][k][0]
+                    time = time + step_speed * 0.0001
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            run = False
+                            break
+                    if time > .90:
+                        a = 0
+                
+
 
 if __name__ == "__main__":
     main()
