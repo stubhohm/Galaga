@@ -45,8 +45,8 @@ def locate_stars(stars, time):
                 draw_star(star, brightness, x, y) 
    
 def translate_stars(stars, y, time, speed):
-    y =  y + (speed * time)
-    scroll_start = HEIGHT * 36 / 32
+    y =  y + (speed * (time + 120) * 120)
+    scroll_start = HEIGHT
     while y > scroll_start:
         y = y - scroll_start
     return y

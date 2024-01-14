@@ -1,4 +1,4 @@
-from game_data.constants.CONSTANTS import HEIGHT, WIDTH, UNIT_OFFSET_X, UNIT_OFFSET_Y
+from ...constants.CONSTANTS import HEIGHT, WIDTH, UNIT_OFFSET_X, UNIT_OFFSET_Y
 
 # bumble bee == 1
 # butterfly == 2
