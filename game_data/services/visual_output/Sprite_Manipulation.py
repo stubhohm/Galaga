@@ -1,4 +1,4 @@
-from . . .constants.CONSTANTS import (
+from game_data.constants.CONSTANTS import (
     FIGHTER_HEIGHT,
     FIGHTER_WIDTH,
     ALIEN_HEIGHT,
