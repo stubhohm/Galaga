@@ -1,6 +1,6 @@
 import pygame
 from Sprite_Manipulation import scale_sprite
-from CONSTANTS import HEIGHT, WIDTH
+from . . .constants.CONSTANTS import HEIGHT, WIDTH
 
 
 # draw sprite
@@ -35,7 +35,6 @@ def draw_image(WINDOW, image, pos_x , pos_y, scale_x, scale_y, rotation, centere
 
     WINDOW.blit(image, (pos_x - a, pos_y - b))
 
-
 # draw text
 def draw_text(WINDOW, text, font, text_color, x_positon, y_position, centered):
     img = font.render(text, True, text_color)
@@ -47,11 +46,3 @@ def draw_text(WINDOW, text, font, text_color, x_positon, y_position, centered):
         a = 0
         b = 0
     WINDOW.blit(img, (x_positon - a, y_position - b))
-
-
-def play_sound(mute_toggle, audio_channel, aduio_volume):
-    # if there is a device and mute is not active play called sound at called volume
-    # unsure how to check for an audio channel right now
-    if audio_channel:
-        if not mute_toggle:
-            a = 0

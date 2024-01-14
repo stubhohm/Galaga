@@ -1,6 +1,6 @@
-from CONSTANTS import HEIGHT, MISSILE_HEIGHT
-from Classes import Missile, Alien_Missile
-from Galaga_Sprites import alien_missile_image, fighter_missile
+from constants.CONSTANTS import HEIGHT, MISSILE_HEIGHT
+from classes.classes import Missile, AlienMissile
+from imported_assets.Galaga_Sprites import alien_missile_image, fighter_missile
 
 
 def add_missile(active_missile_list, shooter):
@@ -15,7 +15,7 @@ def add_missile(active_missile_list, shooter):
         new_missile.position_x = shooter.position_x
         new_missile.position_y = shooter.position_y - HEIGHT / 8
     else:
-        new_alien_missile = Alien_Missile(alien_missile_image, -10, -10)
+        new_alien_missile = AlienMissile(alien_missile_image, -10, -10)
         active_missile_list[0] = new_alien_missile
     new_missile.position_x = shooter.position_x
     new_missile.position_y = shooter.position_y
