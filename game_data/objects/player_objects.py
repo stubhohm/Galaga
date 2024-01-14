@@ -1,6 +1,6 @@
-from Classes import Player, Missile
-from Galaga_Sprites import fighter_image, fighter_missile
-from CONSTANTS import WIDTH
+from classes.classes import Player, Missile
+from imported_assets.Galaga_Sprites import fighter_image, fighter_missile
+from constants.CONSTANTS import WIDTH
 
 # Plaery class: name, lives, image, score, x position, double fighter
 player = Player("Player", 3, fighter_image[0], 0, WIDTH / 2, False, 1)

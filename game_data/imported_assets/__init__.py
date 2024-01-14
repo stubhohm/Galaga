@@ -1,0 +1,1 @@
+from .galaga_sprites import *

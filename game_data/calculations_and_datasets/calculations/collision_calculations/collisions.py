@@ -1,6 +1,6 @@
-from CONSTANTS import FIGHTER_HEIGHT, FIGHTER_WIDTH, ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_Y
-from List_Maniplution import remove_missile
-from Alien_Objects import Alien_Unit
+from constants.CONSTANTS import FIGHTER_HEIGHT, FIGHTER_WIDTH, ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_Y
+from missile_tracking.missile_management import remove_missile
+from objects.Alien_Objects import AlienUnit
 from Sprite_Manipulation import toggle_boss_galaga_sprite
 
 
@@ -21,7 +21,7 @@ def platoon_defeated(armada, i):
 def alien_takes_damage(unit, player):
     unit.hp = unit.hp - 1
     if unit.hp == 0:
-        unit = Alien_Unit(
+        unit = AlienUnit(
             "Alien Explosion",
             9,
             0,

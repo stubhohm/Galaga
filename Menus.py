@@ -1,4 +1,4 @@
-from Classes import Menu
+from classes.Classes import Menu
 
 
 title_menu = Menu("Title Menu", 0)

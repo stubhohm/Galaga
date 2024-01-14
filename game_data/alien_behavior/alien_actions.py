@@ -1,12 +1,12 @@
 import math
 import random
-from CONSTANTS import WIDTH
-from Classes import Alien_Armada, Alien_Platoon
-from Unit_Arrays import unit_arrays, start_time, platoon_final_position, platoon_expansion_multiple
-from Alien_Objects import build_new_unit, flight_paths
-from Bezier_Curve import bezier_curve, construct_bezier_points, shift_bezier_array
-from Bezier_Arrays import get_bezier_flight_path, entry_path_step_speed, get_bezier_attack_pattern
-from Sprite_Manipulation import toggle_alien_sprite_images
+from . .constants.CONSTANTS import WIDTH
+from .classes.classes import AlienArmada, AlienPlatoon
+from . .calculations_and_datasets.data_sets.unit_arrays import unit_arrays, start_time, platoon_final_position, platoon_expansion_multiple
+from .objects.alien_objects import build_new_unit, flight_paths
+from calculations_and_datasets.calculations.bezier_calculations.bezier_curve import bezier_curve, construct_bezier_points, shift_bezier_array
+from calculations_and_datasets.data_sets.Bezier_Arrays import get_bezier_flight_path, entry_path_step_speed, get_bezier_attack_pattern
+from .sprite_manipulation import toggle_alien_sprite_images
 
 def alien_explodes(unit, armada):
     unit.entry_flight_is_completed = True
@@ -48,8 +48,8 @@ def armada_expand_contract(platoon, time):
             else:
                 unit_scaler = 0
             platoon.unit[i].expanded_final_position = (
-            platoon.unit[i].final_position[0] +
-            x_expansion * unit_scaler
+            platoon.unit[i].final_position[0] 
+            + x_expansion * unit_scaler
         )
 
 def build_alien_platoon(i):
@@ -61,7 +61,7 @@ def build_alien_platoon(i):
             for l in range(len(flight_paths[k].platoon)):
                 if flight_paths[k].platoon[l] == i:
                     flight_path = flight_paths[k]
-    platoon = Alien_Platoon(
+    platoon = AlienPlatoon(
         i, 
         platoon, start_time[i],
         0, # path_time set to zero
@@ -74,7 +74,7 @@ def build_alien_platoon(i):
     return platoon
 
 def build_alien_armada():
-    armada = Alien_Armada([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], False)#
+    armada = AlienArmada([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], False)#
     for i in range(len(armada.platoon)):
         armada.platoon[i] = build_alien_platoon(i)
     return armada
@@ -99,9 +99,9 @@ def find_position_on_curve (platoon, i, bezier_points):
     plot_unit(platoon.unit[i], x, y, rotation)
     flight_path_mod = get_flight_path_step_speed(platoon, i, curve_segment)
     platoon.unit[i].path_time = (
-        platoon.unit[i].path_time + 
-        step_speed * 
-        flight_path_mod
+        platoon.unit[i].path_time 
+        + step_speed 
+        * flight_path_mod
     )
     return flight_is_completed
 

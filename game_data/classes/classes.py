@@ -1,14 +1,14 @@
-from CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHTER_SPEED
+from constants.CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHTER_SPEED
 
 
-class Alien_Armada:  # defines the entire alien fleet for a level
+class AlienArmada:  # defines the entire alien fleet for a level
     def __init__(self, platoon, is_defeated = False, active_attackers = 0, game_level = 0):
         self.platoon = platoon
         self.is_defeated = is_defeated
         self.active_attackers = active_attackers
         self.game_level = game_level
 
-class Alien_Platoon:  # defines a specific group of eight aliens
+class AlienPlatoon:  # defines a specific group of eight aliens
     def __init__(
             self, 
             platoon_id, 
@@ -32,7 +32,7 @@ class Alien_Platoon:  # defines a specific group of eight aliens
         self.expansion_scaler = expansion_scaler
         self.is_defeated = is_defeated
 
-class Alien_Unit:  # the uique atributes of each ship unit
+class AlienUnit:  # the uique atributes of each ship unit
     def __init__(
         self,
         name,
@@ -77,7 +77,7 @@ class Alien_Unit:  # the uique atributes of each ship unit
         self.final_position = final_position
         self.expanded_final_position = expanded_final_position
 
-class Alien_Missile:
+class AlienMissile:
     def __init__(self, sprite, position_x, position_y, d_x):
         self.sprite = sprite
         self.position_x = position_x
@@ -101,7 +101,7 @@ class Missile:
         self.d_y = MISSILE_SPEED
         self.d_x = 0
 
-class Active_Missiles:
+class ActiveMissiles:
     def __init__(self, missile, is_player_list):
         self.missile = missile
         self.is_player_list = is_player_list
@@ -148,7 +148,7 @@ class Player:
         self.hits = hits
         self.shots_fired = shots_fired
 
-class Flight_Path:
+class FlightPath:
     def __init__(self, name, path_id, platoon, completed):
         self.name = name
         self.path = path_id

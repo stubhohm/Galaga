@@ -1,12 +1,12 @@
 import pygame
-from CONSTANTS import FPS
+from constants.CONSTANTS import FPS
 from Player_Actions import player_movement, player_fire_missile
 from Services import draw_window
 from Object_Movement import missile_movement
-from Player_Objects import player
-from Alien_Actions import build_alien_armada, alien_armada_behavior
-from Missile_Lists import player_missile_list, alien_missile_list
-from Collisions import collision_check
+from objects.Player_Objects import player
+from alien_behavior.Alien_Actions import build_alien_armada, alien_armada_behavior
+from missile_tracking.missile_list import player_missile_list, alien_missile_list
+from calculations_and_datasets.calculations.collision_calculations.Collisions import collision_check
 from Star_Drawing import generate_stars
 
 pygame.init()

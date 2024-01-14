@@ -1,4 +1,4 @@
-from CONSTANTS import (
+from . . .constants.CONSTANTS import (
     FIGHTER_HEIGHT,
     FIGHTER_WIDTH,
     ALIEN_HEIGHT,
@@ -6,7 +6,7 @@ from CONSTANTS import (
     MISSILE_WIDTH,
     MISSILE_HEIGHT,
 )
-from Galaga_Sprites import *
+from imported_assets.galaga_sprites import *
 
 def toggle_boss_galaga_sprite(boss_galaga):
     if boss_galaga.hp == 2:
@@ -62,7 +62,11 @@ def scale_sprite(object):
                 object.sprite, (FIGHTER_WIDTH, FIGHTER_HEIGHT)
             )
 
+def main():
+    print(MISSILE_HEIGHT)
+
 if __name__ == "__main__":
+    main()
     print(
         "this main only runs if this file is ran, not if another program executes it: Sprite Manipulation"
     )
