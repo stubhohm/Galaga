@@ -1,6 +1,6 @@
 from classes.Classes import AlienUnit, AlienMissile, FlightPath
 from imported_assets.Galaga_Sprites import alien_missile_image
-from Unit_Arrays import unit_offset
+from game_data.calculations_and_datasets.data_sets.Unit_Arrays import unit_offset
 
 # varaible = AlienUnity(name, alien id/sprite set, cycle_position, hp, can abduction, points, completed curve)
 

@@ -1,4 +1,4 @@
-from classes.Classes import Player, Missile
+from classes.classes import Player, Missile
 from imported_assets.Galaga_Sprites import fighter_image, fighter_missile
 from constants.CONSTANTS import WIDTH
 
