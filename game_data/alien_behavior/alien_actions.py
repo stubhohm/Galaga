@@ -1,12 +1,12 @@
 import math
 import random
 from . .constants.CONSTANTS import WIDTH
-from .classes.classes import AlienArmada, AlienPlatoon
+from . .classes.classes import AlienArmada, AlienPlatoon
 from . .calculations_and_datasets.data_sets.unit_arrays import unit_arrays, start_time, platoon_final_position, platoon_expansion_multiple
-from .objects.alien_objects import build_new_unit, flight_paths
-from calculations_and_datasets.calculations.bezier_calculations.bezier_curve import bezier_curve, construct_bezier_points, shift_bezier_array
-from calculations_and_datasets.data_sets.Bezier_Arrays import get_bezier_flight_path, entry_path_step_speed, get_bezier_attack_pattern
-from .sprite_manipulation import toggle_alien_sprite_images
+from . .objects.alien_objects import build_new_unit, flight_paths
+from . .calculations_and_datasets.calculations.bezier_calculations.bezier_curve import bezier_curve, construct_bezier_points, shift_bezier_array
+from . .calculations_and_datasets.data_sets.bezier_arrays import get_bezier_flight_path, entry_path_step_speed, get_bezier_attack_pattern
+from . .services.visual_output.sprite_manipulation import toggle_alien_sprite_images
 
 def alien_explodes(unit, armada):
     unit.entry_flight_is_completed = True

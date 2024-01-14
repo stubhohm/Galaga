@@ -6,7 +6,7 @@ from . . .constants.CONSTANTS import (
     MISSILE_WIDTH,
     MISSILE_HEIGHT,
 )
-from imported_assets.galaga_sprites import *
+from game_data.imported_assets.galaga_sprites import *
 
 def toggle_boss_galaga_sprite(boss_galaga):
     if boss_galaga.hp == 2:

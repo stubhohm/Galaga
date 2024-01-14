@@ -1,4 +1,4 @@
-from classes.Classes import Menu
+from game_data.classes.classes import Menu
 
 
 title_menu = Menu("Title Menu", 0)

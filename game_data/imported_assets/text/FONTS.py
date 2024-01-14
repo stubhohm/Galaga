@@ -2,9 +2,9 @@ import pygame
 
 pygame.font.init()
 
-text_font = pygame.font.Font("Quinquefive-ALoRM.ttf", 15)
-menu_font = pygame.font.Font("Quinquefive-ALoRM.ttf", 10)
-event_font = pygame.font.Font("Quinquefive-ALoRM.ttf", 6)
+text_font = pygame.font.Font("game_data//imported_assets//text//Quinquefive-ALoRM.ttf", 15)
+menu_font = pygame.font.Font("game_data//imported_assets//text//Quinquefive-ALoRM.ttf", 10)
+event_font = pygame.font.Font("game_data//imported_assets//text//Quinquefive-ALoRM.ttf", 6)
 
 def main():
     a = 0

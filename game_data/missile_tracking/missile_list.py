@@ -1,5 +1,5 @@
-from classes.classes import ActiveMissiles
-from objects.player_objects import missile
+from game_data.classes.classes import ActiveMissiles
+from game_data.objects.player_objects import missile
 
 player_missile_list = ActiveMissiles([missile], True)
 alien_missile_list = ActiveMissiles([missile], False)

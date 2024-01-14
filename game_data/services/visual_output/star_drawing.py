@@ -1,9 +1,9 @@
 import pygame
 import math
 import random
-from constants.COLORS import BLACK
-from classes.Classes import Stars
-from constants.CONSTANTS import HEIGHT, WIDTH, FPS
+from game_data.constants.COLORS import BLACK
+from game_data.constants.CONSTANTS import HEIGHT, WIDTH, FPS
+from game_data.classes.classes import Stars
 
 pygame.init()
 
