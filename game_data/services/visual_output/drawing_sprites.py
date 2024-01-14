@@ -1,6 +1,6 @@
 import pygame
-from Sprite_Manipulation import scale_sprite
-from . . .constants.CONSTANTS import HEIGHT, WIDTH
+from game_data.services.visual_output.sprite_manipulation import scale_sprite
+from game_data.constants.CONSTANTS import HEIGHT, WIDTH
 
 
 # draw sprite

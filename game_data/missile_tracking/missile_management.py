@@ -1,7 +1,6 @@
-from constants.CONSTANTS import HEIGHT, MISSILE_HEIGHT
-from classes.classes import Missile, AlienMissile
-from imported_assets.Galaga_Sprites import alien_missile_image, fighter_missile
-
+from game_data.constants.CONSTANTS import HEIGHT, MISSILE_HEIGHT
+from game_data.classes.classes import Missile, AlienMissile
+from . .imported_assets.galaga_sprites import alien_missile_image, fighter_missile
 
 def add_missile(active_missile_list, shooter):
     # move all missiles up one spot in the array
@@ -43,7 +42,6 @@ def remove_missile(missile_list, missile_rank):
         holding_missile = missile_list.missile[i + 1]
         missile_list.missile[i + 1] = missile_list.missile[i]
         missile_list.missile[i] = holding_missile
-
 
 if __name__ == "__main__":
     print(

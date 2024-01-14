@@ -1,6 +1,6 @@
 import random
 import copy
-from constants.CONSTANTS import HEIGHT, WIDTH
+from game_data.constants.CONSTANTS import HEIGHT, WIDTH
 
 
 entry_path_step_speed = [

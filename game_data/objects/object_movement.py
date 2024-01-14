@@ -1,5 +1,5 @@
-from constants.CONSTANTS import MISSILE_SPEED
-from missile_tracking.missile_management import clean_missile_list
+from game_data.constants.CONSTANTS import MISSILE_SPEED
+from game_data.missile_tracking.missile_management import clean_missile_list
 
 
 def object_movement(object, d_x, d_y):

@@ -1,7 +1,7 @@
 import pygame
-from constants.CONSTANTS import WIDTH, HEIGHT
-from Object_Movement import object_movement
-from missile_tracking.missile_management import add_missile
+from game_data.constants.CONSTANTS import WIDTH, HEIGHT
+from game_data.objects.object_movement import object_movement
+from game_data.missile_tracking.missile_management import add_missile
 
 def player_movement(key_pressed, player):
     if key_pressed[pygame.K_a] or key_pressed[pygame.K_LEFT]:

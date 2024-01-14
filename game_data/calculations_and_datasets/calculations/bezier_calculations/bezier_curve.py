@@ -1,17 +1,17 @@
 import math
 import random
 import pygame
-from . . .services.visual_output.drawing_sprites import draw_text
-from imported_assets.text.FONTS import menu_font
-from . data_sets.bezier_arrays import (
+from game_data.services.visual_output.drawing_sprites import draw_text
+from game_data.imported_assets.text.FONTS import menu_font
+from game_data.calculations_and_datasets.data_sets.bezier_arrays import (
     bezier_step_speed, 
     get_bezier_points, 
     get_bezier_flight_path,
     attack_pattern_bezier_points,
     attack_pattern_speed_steps    
 )
-from constants.COLORS import BLACK, WHITE, RED, YELLOW
-from constants.CONSTANTS import HEIGHT, WIDTH, FPS
+from game_data.constants.COLORS import BLACK, WHITE, RED, YELLOW
+from game_data.constants.CONSTANTS import HEIGHT, WIDTH, FPS
 
 # Create Display for visulaizatoin purposes
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))

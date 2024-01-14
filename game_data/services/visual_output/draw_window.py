@@ -1,10 +1,10 @@
 import pygame
-from constants.CONSTANTS import WIDTH, HEIGHT
-from constants.COLORS import BLACK, WHITE
-from imported_assets.text.FONTS import *
-from services.visual_output.drawing_sprites import draw_sprite, draw_image, draw_text, play_sound
-from Star_Drawing import locate_stars
-from imported_assets.Galaga_Sprites import fighter_image
+from game_data.constants.CONSTANTS import WIDTH, HEIGHT
+from game_data.constants.COLORS import BLACK, WHITE
+from game_data.imported_assets.text.FONTS import *
+from game_data.services.visual_output.drawing_sprites import draw_sprite, draw_image, draw_text
+from game_data.services.visual_output.star_drawing import locate_stars
+from game_data.imported_assets.galaga_sprites import fighter_image
 
 # Colors
 
