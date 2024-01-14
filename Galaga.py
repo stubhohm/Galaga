@@ -7,8 +7,7 @@ from game_data.objects.player_objects import player
 from game_data.alien_behavior.alien_actions import build_alien_armada, alien_armada_behavior
 from game_data.missile_tracking.missile_list import player_missile_list, alien_missile_list
 from game_data.calculations_and_datasets.calculations.collision_calculations.collisions import collision_check
-from game_data.services.visual_output.star_drawing import generate_stars
-import game_data 
+from game_data.services.visual_output.star_drawing import generate_stars 
 
 pygame.init()
 
