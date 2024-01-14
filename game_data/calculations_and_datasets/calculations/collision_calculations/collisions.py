@@ -1,7 +1,7 @@
-from game_data.constants.CONSTANTS import FIGHTER_HEIGHT, FIGHTER_WIDTH, ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_Y
-from game_data.missile_tracking.missile_management import remove_missile
-from game_data.objects.alien_objects import AlienUnit
-from game_data.services.visual_output.sprite_manipulation import toggle_boss_galaga_sprite
+from ....constants.CONSTANTS import FIGHTER_HEIGHT, FIGHTER_WIDTH, ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_Y
+from ....missile_tracking.missile_management import remove_missile
+from ....objects.alien_objects import AlienUnit
+from ....services.visual_output.sprite_manipulation import toggle_boss_galaga_sprite
 
 def armada_defeated(armada):
     for i in range(len(armada.platoon)):

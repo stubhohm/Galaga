@@ -6,14 +6,12 @@ from game_data.services.visual_output.drawing_sprites import draw_sprite, draw_i
 from game_data.services.visual_output.star_drawing import locate_stars
 from game_data.imported_assets.galaga_sprites import fighter_image
 
-# Colors
-
 # Create Display
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Galaga")
 
-def fill_window():
-    WINDOW.fill((BLACK))
+def fill_window(color):
+    WINDOW.fill((color))
 
 def draw_window(player_missile_list, player, alien_missile_list, alien_armada, star_clusters, time):
     WINDOW.fill((BLACK))
@@ -38,7 +36,7 @@ def draw_window(player_missile_list, player, alien_missile_list, alien_armada, s
 
 
 def main():
-    a = 0
+    fill_window(BLACK)
 
 
 # play sounds

@@ -14,7 +14,7 @@ pygame.init()
 def main():
     clock = pygame.time.Clock()
     run = True
-    time = 0
+    time = -120
     # need to do one time on level start, but putting here for now
     alien_armada = build_alien_armada()
     star_clusters = generate_stars()

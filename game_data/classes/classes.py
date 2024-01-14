@@ -1,4 +1,4 @@
-from game_data.constants.CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHTER_SPEED
+from ..constants.CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHTER_SPEED
 
 
 class AlienArmada:  # defines the entire alien fleet for a level
