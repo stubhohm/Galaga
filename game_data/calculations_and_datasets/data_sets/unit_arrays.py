@@ -1,4 +1,5 @@
 from ...constants.CONSTANTS import HEIGHT, WIDTH, UNIT_OFFSET_X, UNIT_OFFSET_Y
+from ...objects.alien_objects import flight_path_1, flight_path_2, flight_path_3, flight_path_4
 
 # bumble bee == 1
 # butterfly == 2
@@ -24,6 +25,8 @@ unit_arrays = [
 start_time = [0, 0, 200, 232, 400, 432, 600, 632, 800, 832]
 
 platoon_paths = [1, 2, 3, 3, 4, 4, 1, 1, 2, 2]
+
+flight_paths = [flight_path_1, flight_path_2, flight_path_3, flight_path_4]
 
 platoon_expansion_multiple = [
     0,
