@@ -208,10 +208,11 @@ def get_bezier_attack_pattern(unit):
     path = 0
     if (id != 2):
         path = 2
-        if unit.id == 3:
-                path = 3
-                if random.randrange(0,10) > 6:
-                    path = 4
+        if id == 3:
+                path = 4
+                if random.randrange(0,10) > 0:
+                    path = 3
+                    unit.can_abduct = True
         elif random.randrange(0,10) > 7:
             path = 1
 

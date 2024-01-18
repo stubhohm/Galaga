@@ -10,8 +10,12 @@ def object_movement(object, d_x, d_y):
 
 def missile_movement(missile_list):
     # iterate through all missiles in active player missiles
+    if missile_list.is_player_list == True:
+        modded_missile_speed = MISSILE_SPEED * -1
+    else: 
+        modded_missile_speed = MISSILE_SPEED / 3
     for i in range(len(missile_list.missile)):
-        pos_x, pos_y = object_movement(missile_list.missile[i], missile_list.missile[i].d_x, MISSILE_SPEED * -1)
+        pos_x, pos_y = object_movement(missile_list.missile[i], missile_list.missile[i].d_x, modded_missile_speed)
     missile_list = clean_missile_list(missile_list)
 
 

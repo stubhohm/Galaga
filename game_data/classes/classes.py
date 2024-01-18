@@ -41,6 +41,7 @@ class AlienUnit:  # the uique atributes of each ship unit
         hp,
         can_abduct,
         point_value,
+        beam_image = None,
         rotation = 0,
         position_x = None,
         position_y = None,
@@ -53,6 +54,8 @@ class AlienUnit:  # the uique atributes of each ship unit
         path = None,
         final_position = None,
         expanded_final_position = None,
+        boss_capture_id = None
+
     ):
         self.name = name
         self.id = id
@@ -63,8 +66,9 @@ class AlienUnit:  # the uique atributes of each ship unit
         self.d_y = d_y
         self.image_in_cycle = image_in_cylce
         self.hp = hp
-        self.can_abduct = can_abduct
         self.point_value = point_value
+        self.can_abduct = can_abduct
+        self.beam_image = beam_image
         self.is_alien = True
         self.rotation = rotation
         self.is_missile = False
@@ -76,6 +80,7 @@ class AlienUnit:  # the uique atributes of each ship unit
         self.path = path
         self.final_position = final_position
         self.expanded_final_position = expanded_final_position
+        self.boss_capture_id = boss_capture_id
 
 class AlienMissile:
     def __init__(self, sprite, position_x, position_y, d_x):
@@ -128,7 +133,9 @@ class Player:
         active, 
         kills = 0, 
         hits = 0, 
-        shots_fired = 0
+        shots_fired = 0,
+        rotation = 0,
+        abducted = False
         ):
         self.name = name
         self.lives = lives
@@ -147,6 +154,8 @@ class Player:
         self.kills = kills
         self.hits = hits
         self.shots_fired = shots_fired
+        self.rotation = rotation
+        self.abducted = abducted
 
 class FlightPath:
     def __init__(self, name, path_id, platoon, completed):

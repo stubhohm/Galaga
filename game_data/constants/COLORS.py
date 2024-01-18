@@ -5,6 +5,7 @@ FADED_WHITE = (125, 125, 125)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255,0)
+BLUE = (0, 0, 255)
 
 
 if __name__ == "__main__":

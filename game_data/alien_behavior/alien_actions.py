@@ -1,4 +1,5 @@
 import random
+from ..constants.CONSTANTS import WIDTH, FIGHTER_Y
 from .movement import armada_expand_contract, plot_unit, unit_entry_movement, unit_final_station_movement
 from .building import build_alien_armada
 from .attacking import select_attackers, unit_attack_movement
@@ -14,18 +15,19 @@ def alien_explodes(unit, armada):
     x = unit.position_x
     plot_unit(unit, x, y, 0)
 
-def alien_armada_behavior(armada,time):
+def alien_armada_behavior(armada, alien_missile_list, time, player):
     for i in range(len(armada.platoon)):
         toggle_alien_sprite_images(armada.platoon[i], time)
         if armada.is_defeated == True:
             continue
-        select_attackers(armada, time)
+        if player.abducted != True:
+            select_attackers(armada, time)
         if armada.platoon[i].is_defeated == True:
             continue          
-        platoon_behavior(armada.platoon[i], time, armada)
+        platoon_behavior(armada.platoon[i], time, armada, alien_missile_list, player)
         armada_expand_contract(armada.platoon[i], time)
             
-def platoon_behavior(platoon, time, armada):
+def platoon_behavior(platoon, time, armada, alien_missile_list, player):
     # iterate through the flightpaths and platoons in that path
     for j in range(len(platoon.unit)):
         if platoon.unit[j].hp == 0:
@@ -34,8 +36,8 @@ def platoon_behavior(platoon, time, armada):
         entry_flight = platoon.unit[j].entry_flight_is_completed
         station_flight = platoon.unit[j].station_flight_is_completed
         attack_flight = platoon.unit[j].attack_flight_is_completed
-        if attack_flight != True:
-            unit_attack_movement(platoon, platoon.unit[j], j, armada)
+        if attack_flight != True and platoon.unit[j].id !=7:
+            unit_attack_movement(platoon, platoon.unit[j], j, armada, alien_missile_list)
         elif entry_flight != True:
             unit_entry_movement(platoon, j, time)
         elif station_flight != True:
@@ -45,6 +47,12 @@ def platoon_behavior(platoon, time, armada):
             x = platoon.expanded_final_position + platoon.unit[j].expanded_final_position
             y = platoon.final_position[1] + platoon.unit[j].final_position[1]
             plot_unit(platoon.unit[j], x, y, rotation)
+            if platoon.unit[j].id == 7 and player.abducted:
+                player.abducted = False
+                player.lives = player.lives - 1
+                player.position_x = WIDTH / 2
+                player.position_y = FIGHTER_Y
+                player.rotation = 0
 
 def main():
     run = True

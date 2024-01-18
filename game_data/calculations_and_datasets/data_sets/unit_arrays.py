@@ -1,4 +1,4 @@
-from ...constants.CONSTANTS import HEIGHT, WIDTH, UNIT_OFFSET_X, UNIT_OFFSET_Y
+from ...constants.CONSTANTS import HEIGHT, WIDTH, UNIT_OFFSET_X, UNIT_OFFSET_Y, WAVE_STARTS, SECOND_PLATOON_DELAY, START_DELAY
 from ...objects.alien_objects import flight_path_1, flight_path_2, flight_path_3, flight_path_4
 
 # bumble bee == 1
@@ -7,6 +7,9 @@ from ...objects.alien_objects import flight_path_1, flight_path_2, flight_path_3
 # scorpion == 4
 # galaxian == 5
 # bosonian == 6
+
+# used to build units in the armada
+# each row is a platoon, each number is a unit id
 
 unit_arrays = [
     [1, 1, 1, 1],
@@ -21,13 +24,27 @@ unit_arrays = [
     [1, 1, 1, 1],
 ]
 
-# these will get tweaked after positioning function is completed
-start_time = [0, 0, 200, 232, 400, 432, 600, 632, 800, 832]
+# the in game time that a platoon enters the screen
+start_time = [
+    WAVE_STARTS[0] + START_DELAY, 
+    WAVE_STARTS[0] + START_DELAY,
+    WAVE_STARTS[1] + START_DELAY, 
+    WAVE_STARTS[1] + START_DELAY + SECOND_PLATOON_DELAY,
+    WAVE_STARTS[2] + START_DELAY, 
+    WAVE_STARTS[2] + START_DELAY + SECOND_PLATOON_DELAY,
+    WAVE_STARTS[3] + START_DELAY, 
+    WAVE_STARTS[3] + START_DELAY + SECOND_PLATOON_DELAY,
+    WAVE_STARTS[4] + START_DELAY, 
+    WAVE_STARTS[4] + START_DELAY + SECOND_PLATOON_DELAY,
+    ]
 
+# platoons entry
 platoon_paths = [1, 2, 3, 3, 4, 4, 1, 1, 2, 2]
 
+# array containing flight path class 
 flight_paths = [flight_path_1, flight_path_2, flight_path_3, flight_path_4]
 
+# controls how much a platoon moves during expansion and contraction
 platoon_expansion_multiple = [
     0,
     0,
@@ -41,6 +58,7 @@ platoon_expansion_multiple = [
     2.5
 ]
 
+# sets the final place of a platoon during the entry and station movements
 platoon_final_position = [
     [WIDTH * 4 / 8, HEIGHT * 4 / 16],
     [WIDTH * 4 / 8, HEIGHT * 3 / 16],
@@ -54,6 +72,7 @@ platoon_final_position = [
     [WIDTH * 6 / 8, HEIGHT * 4 / 16],
 ]
 
+# sets how the units are offset from the platoons center point
 x = UNIT_OFFSET_X
 y = UNIT_OFFSET_Y
 unit_offset = [

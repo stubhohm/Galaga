@@ -15,6 +15,9 @@ FIGHTER_HEIGHT = PIXEL_ART_SCALE * 3
 FIGHTER_WIDTH = PIXEL_ART_SCALE * 3
 MISSILE_HEIGHT = PIXEL_ART_SCALE * 3
 MISSILE_WIDTH = PIXEL_ART_SCALE * 2
+BEAM_HEIGHT = PIXEL_ART_SCALE * 5.5
+BEAM_WIDTH = PIXEL_ART_SCALE * 2.5
+
 
 # fighter y position
 FIGHTER_Y = HEIGHT * 7 / 8
@@ -26,6 +29,17 @@ MISSILE_SPEED = HEIGHT / 64
 # alien x and y offsets
 UNIT_OFFSET_X = WIDTH / 32
 UNIT_OFFSET_Y = HEIGHT / 64
+
+# alien platoon attack wave start times
+WAVE_STARTS = [
+    0,
+    200,
+    400,
+    600,
+    800
+]
+SECOND_PLATOON_DELAY = 32
+START_DELAY = 200
 
 def main():
     print("seems pretty constant to me")

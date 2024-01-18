@@ -33,9 +33,10 @@ bosconian_image = [
     pygame.image.load("game_data//imported_assets//sprites//Aliens//bosconian_1.png"),
     pygame.image.load("game_data//imported_assets//sprites//Aliens//bosconian_2.png"),
 ]
+
 captured_fighter_image = [
     pygame.image.load("game_data//imported_assets//sprites//Aliens//captured_fighter_1.png"),
-    pygame.image.load("game_data//imported_assets//sprites//Aliens//captured_fighter_2.png"),
+    pygame.image.load("game_data//imported_assets//sprites//Aliens//captured_fighter_1.png"),
 ]
 
 alien_missile_image = pygame.image.load("game_data//imported_assets//sprites//Aliens//alien_missile.png")
@@ -47,6 +48,33 @@ alien_explosion = [
     pygame.image.load("game_data//imported_assets//sprites//Aliens//alien_explosion_4.png"),
     pygame.image.load("game_data//imported_assets//sprites//Aliens//alien_explosion_5.png"),
     pygame.image.load("game_data//imported_assets//sprites//blank.png"),
+]
+
+tractor_beam = [
+    [
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_1.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_2.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_3.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_4.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_5.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_6.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_7.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_a_8.png"),   
+    ],
+    [
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_1.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_2.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_3.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_4.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_5.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_6.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_7.png"),
+     pygame.image.load("game_data//imported_assets//sprites//Aliens//beam_b_8.png"),   
+    ],
+    [
+     pygame.image.load("game_data//imported_assets//sprites//blank.png"),  
+    ],
+
 ]
 
 Alien_Image = [

@@ -14,7 +14,7 @@ pygame.init()
 def main():
     clock = pygame.time.Clock()
     run = True
-    time = -120
+    time = 0
     # need to do one time on level start, but putting here for now
     alien_armada = build_alien_armada()
     star_clusters = generate_stars()
@@ -23,6 +23,8 @@ def main():
         key_released = None
         key_pressed = None
         key_pressed = pygame.key.get_pressed()
+        if key_pressed[pygame.K_q]:
+            run = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -30,7 +32,7 @@ def main():
                 key_released = event.key
         player_movement(key_pressed, player)
         player_fire_missile(player, player_missile_list, key_released)
-        alien_armada_behavior(alien_armada,time)
+        alien_armada_behavior(alien_armada, alien_missile_list, time, player)
         missile_movement(player_missile_list)
         missile_movement(alien_missile_list)
         collision_check(player_missile_list,player, alien_missile_list, alien_armada)

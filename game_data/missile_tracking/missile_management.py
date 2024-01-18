@@ -1,4 +1,4 @@
-from game_data.constants.CONSTANTS import HEIGHT, MISSILE_HEIGHT
+from game_data.constants.CONSTANTS import HEIGHT, MISSILE_HEIGHT, FIGHTER_HEIGHT
 from game_data.classes.classes import Missile, AlienMissile
 from . .imported_assets.galaga_sprites import alien_missile_image, fighter_missile
 
@@ -10,14 +10,15 @@ def add_missile(active_missile_list, shooter):
 
     if active_missile_list.is_player_list:
         new_missile = Missile(fighter_missile, -10, -10, False)
-        new_active_missile_list[0] = new_missile
-        new_missile.position_x = shooter.position_x
-        new_missile.position_y = shooter.position_y - HEIGHT / 8
+        new_missile.position_y = shooter.position_y - FIGHTER_HEIGHT / 6
     else:
-        new_alien_missile = AlienMissile(alien_missile_image, -10, -10)
-        active_missile_list[0] = new_alien_missile
+        d_x  = 1
+        if shooter.rotation > 0:
+            d_x = d_x * -1
+        new_missile = AlienMissile(alien_missile_image, -10, -10, d_x)
+        new_missile.position_y = shooter.position_y
+    new_active_missile_list[0] = new_missile
     new_missile.position_x = shooter.position_x
-    new_missile.position_y = shooter.position_y
     return new_active_missile_list
 
 def clean_missile_list(active_missile_list):

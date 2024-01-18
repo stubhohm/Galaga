@@ -1,7 +1,12 @@
-from ....constants.CONSTANTS import FIGHTER_HEIGHT, FIGHTER_WIDTH, ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_Y
+import pygame
+from ....constants.COLORS import WHITE, RED, YELLOW, BLUE
+from ....services.visual_output.draw_window import WINDOW
+from ....constants.CONSTANTS import FIGHTER_HEIGHT, FIGHTER_WIDTH, ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_Y, WIDTH, HEIGHT
 from ....missile_tracking.missile_management import remove_missile
 from ....objects.alien_objects import AlienUnit
+from ....player.player_actions import increase_player_score
 from ....services.visual_output.sprite_manipulation import toggle_boss_galaga_sprite
+from ....alien_behavior.abucting import abduction_animation
 
 def armada_defeated(armada):
     for i in range(len(armada.platoon)):
@@ -20,6 +25,7 @@ def platoon_defeated(armada, i):
 def alien_takes_damage(unit, player):
     unit.hp = unit.hp - 1
     if unit.hp == 0:
+        increase_player_score(unit,player)
         unit = AlienUnit(
             "Alien Explosion",
             9,
@@ -27,6 +33,7 @@ def alien_takes_damage(unit, player):
             0,
             False,
             0,
+            None,
             0,
             unit.position_x,
             unit.position_y,
@@ -52,7 +59,11 @@ def alien_to_player_fighter_collision(alien_armada, player):
     contact = False
     for i in range(len(alien_armada.platoon)):
         for j in range(len(alien_armada.platoon[i].unit)):
+            if alien_armada.platoon[i].is_defeated:
+                break
             unit = alien_armada.platoon[i].unit[j]
+            if unit.can_abduct and unit.position_y == 522:
+                check_abduction(player, alien_armada, i, j)
             if unit.position_y:
                 if unit.position_y > FIGHTER_Y - FIGHTER_HEIGHT / 2:
                     return convert_to_coordinates(unit, player)
@@ -67,30 +78,50 @@ def alien_missile_to_player_fighter_collision(alien_missile_list, player):
             return hit
 
 def collision_check(player_missile_list,player, alien_missile_list, alien_armada):
-    if len(player_missile_list.missile) > 0:
-        player_missile_to_alien_collision(player_missile_list, alien_armada, player)    
-    if len(alien_missile_list.missile) > 0:
-        contact = alien_missile_to_player_fighter_collision(alien_missile_list, player)
-        if contact:
-            a = 0 # return player death
+    if player.abducted != True:
+        if len(player_missile_list.missile) > 0:
+            player_missile_to_alien_collision(player_missile_list, alien_armada, player)    
+        if len(alien_missile_list.missile) > 0:
+            contact = alien_missile_to_player_fighter_collision(alien_missile_list, player)
+            if contact:
+                a = 0 # return player death
     contact = alien_to_player_fighter_collision(alien_armada, player)
-    if contact:
-            a = 0 # return player death
+    if contact and player.abducted != True:
+        a = 0 # return player death
 
 def convert_to_coordinates(unit, player):
     # the 4 is to shrink it since there is a good amount of white space on the sprite drawings
     # this number will need to be tweaked to get the collision just right so its not bs
+    if not isinstance(player.position_x,(int,float)):
+        return False
     x = unit.position_x 
     y = unit.position_y
     nose_tip_x = player.position_x
-    nose_tip_y = player.position_y - FIGHTER_HEIGHT / 4
+    nose_tip_y = player.position_y - FIGHTER_HEIGHT / 3
     left_wing_tip_x = player.position_x - FIGHTER_WIDTH / 4
-    left_wing_tip_y = right_wing_tip_y = player.position_y + FIGHTER_WIDTH / 4
+    left_wing_tip_y = right_wing_tip_y = player.position_y + FIGHTER_HEIGHT / 6
     right_wing_tip_x = player.position_x + FIGHTER_WIDTH / 4
     a = (nose_tip_x, nose_tip_y)
     b = (left_wing_tip_x, left_wing_tip_y)
     c = (right_wing_tip_x, right_wing_tip_y)
+    # pygame.draw.circle(WINDOW, RED,a,3)
+    # pygame.draw.circle(WINDOW, WHITE,b,3)
+    # pygame.draw.circle(WINDOW, YELLOW,c,3)
+    # pygame.draw.circle(WINDOW, BLUE,(x,y),3)
+    # pygame.display.update()
     return player_collision_calculation(a, b, c, x, y)
+
+def check_abduction(player, armada, i ,j):
+    unit = armada.platoon[i].unit[j]
+    if not isinstance(player.position_x,(int,float)):
+        return
+    elif (unit.position_x - ALIEN_WIDTH 
+        < player.position_x 
+        < unit.position_x + ALIEN_WIDTH):
+        if 5.6 < unit.path_time < 8.4 or player.abducted:
+            player.abducted = True
+            if abduction_animation(player, unit, armada, i, j):
+                armada.platoon[i].unit[j].can_abduct = False
 
 def player_collision_calculation(a, b, c, x, y):
     
@@ -120,7 +151,6 @@ def player_missile_to_alien_collision(player_missile_list, alien_armada, player)
                             alien_armada.platoon[j].unit[k] = alien_takes_damage(unit, player)
                             platoon_defeated(alien_armada, j)
 
-                        
 def main():
     collision = player_collision_calculation((64,0), (0,32), (0,-32), 18, 18)
     print(collision)

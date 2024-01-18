@@ -5,6 +5,8 @@ from game_data.constants.CONSTANTS import (
     ALIEN_WIDTH,
     MISSILE_WIDTH,
     MISSILE_HEIGHT,
+    BEAM_WIDTH,
+    BEAM_HEIGHT
 )
 from game_data.imported_assets.galaga_sprites import *
 
@@ -43,8 +45,12 @@ def toggle_alien_sprite_images(platoon, time):
             if platoon.unit[i].id == 9: 
                 toggle_alien_explosion(platoon.unit[i])
 
-def scale_sprite(object):
-    if object.is_missile:
+def scale_sprite(object, is_beam=False):
+    if is_beam:
+        object.beam_image = pygame.transform.scale(
+            object.beam_image, (BEAM_WIDTH, BEAM_HEIGHT)
+        )
+    elif object.is_missile:
         object.sprite = pygame.transform.scale(
             object.sprite, (MISSILE_WIDTH, MISSILE_HEIGHT)
         )
@@ -56,11 +62,14 @@ def scale_sprite(object):
                 object.sprite, (ALIEN_WIDTH, ALIEN_HEIGHT)
             )
             object.sprite = pygame.transform.rotate(object.sprite, object.rotation)
-
         if object.is_fighter:
+            object.sprite = fighter_image[0]
+            if object.is_alien:
+                object.sprite = Alien_Image[6][0]
             object.sprite = pygame.transform.scale(
                 object.sprite, (FIGHTER_WIDTH, FIGHTER_HEIGHT)
-            )
+                )
+            object.sprite = pygame.transform.rotate(object.sprite, object.rotation)
 
 def main():
     print(MISSILE_HEIGHT)

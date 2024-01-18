@@ -3,6 +3,7 @@ import random
 import pygame
 from ....services.visual_output.drawing_sprites import draw_text
 from ....imported_assets.text.FONTS import menu_font
+from ....imported_assets.galaga_sprites import tractor_beam
 from ...data_sets.bezier_arrays import (
     bezier_step_speed, 
     get_bezier_points, 
@@ -134,6 +135,23 @@ def shift_bezier_array(unit):
             unit.path[0][i][j][0] = int(x_mod * unit.path[0][i][j][0]) + int(unit.position_x)
             unit.path[0][i][j][1] = int((unit.path[0][i][j][1] * 7 / 8)) + int(unit.position_y)
     a = 0
+
+def get_curve_segment_and_time_step(curve_segment, time_step, unit, i, bezier_points):
+    flight_is_completed = False
+    while time_step >= 1:
+        curve_segment = curve_segment + 1
+        if unit.can_abduct and curve_segment == len(bezier_points) - 1:
+            unit.beam_image = tractor_beam[2][0]
+            time_step = time_step - 1
+            break
+        elif curve_segment > len(bezier_points) -1 :
+            unit.path_time = 0 + (i * 0.15)
+            curve_segment = len(bezier_points) - 1
+            flight_is_completed = True
+            break
+        else: 
+            time_step = time_step - 1
+    return curve_segment, time_step, flight_is_completed
 
 def main():
     clock = pygame.time.Clock()

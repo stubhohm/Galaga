@@ -9,10 +9,10 @@ def build_new_unit(unit_type, unit_rank, platoon_rank):
             "Bumble Bee", 1, 0, 1, False, 100)
     if unit_type == 2:
         unit = AlienUnit(
-            "Butter Fly", 2, 0, 1, False, 100)
+            "Butter Fly", 2, 0, 1, False, 160)
     if unit_type == 3:
         unit = AlienUnit(
-            "Galaga", 3, 0, 2, True, 400, 0)
+            "Galaga", 3, 0, 2, False, 400, 0)
     if unit_type == 4:
         unit = AlienUnit(
             "Scorpion", 4, 0, 1, False, 100, 0)
