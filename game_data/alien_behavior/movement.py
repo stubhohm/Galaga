@@ -17,7 +17,7 @@ def check_and_tow_captured_fighter(boss_galaga, captured_fighter, i):
         captured_fighter.attack_flight_is_completed = boss_galaga.attack_flight_is_completed
         trailing_distance = FIGHTER_HEIGHT / 2
         target_theta = boss_galaga.rotation + 180
-        if 520 < boss_galaga.position_y < 525:
+        if 520 < boss_galaga.position_y < 525 and boss_galaga.can_abduct:
             target_theta = boss_galaga.rotation
         target_theta = math.radians(target_theta)
         x = int(trailing_distance * math.sin(target_theta)) + boss_galaga.position_x

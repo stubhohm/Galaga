@@ -3,13 +3,12 @@ from ..constants.CONSTANTS import WIDTH, FIGHTER_Y
 from .movement import armada_expand_contract, plot_unit, unit_entry_movement, unit_final_station_movement
 from .building import build_alien_armada
 from .attacking import select_attackers, unit_attack_movement
+from .abucting import abduction_animation
 from . .services.visual_output.sprite_manipulation import toggle_alien_sprite_images
 
 def alien_explodes(unit, armada):
     unit.entry_flight_is_completed = True
     unit.station_flight_is_completed = True
-    if unit.attack_flight_is_completed != True and armada.active_attackers > 0:
-        armada.active_attackers = armada.active_attackers - 1
     unit.attack_flight_is_completed = True
     y = unit.position_y
     x = unit.position_x
@@ -24,14 +23,18 @@ def alien_armada_behavior(armada, alien_missile_list, time, player):
             select_attackers(armada, time)
         if armada.platoon[i].is_defeated == True:
             continue          
-        platoon_behavior(armada.platoon[i], time, armada, alien_missile_list, player)
+        platoon_behavior(armada.platoon[i], i, time, armada, alien_missile_list, player)
         armada_expand_contract(armada.platoon[i], time)
             
-def platoon_behavior(platoon, time, armada, alien_missile_list, player):
+def platoon_behavior(platoon, i, time, armada, alien_missile_list, player):
     # iterate through the flightpaths and platoons in that path
     for j in range(len(platoon.unit)):
         if platoon.unit[j].hp == 0:
             alien_explodes(platoon.unit[j], armada)
+            continue
+        if platoon.unit[j].id ==7 and platoon.unit[j].boss_capture_id == None:
+            # fx can handle both alien capture, and player reclaim
+            abduction_animation(platoon.unit[j],player, armada, i, j)
             continue
         entry_flight = platoon.unit[j].entry_flight_is_completed
         station_flight = platoon.unit[j].station_flight_is_completed
@@ -48,11 +51,13 @@ def platoon_behavior(platoon, time, armada, alien_missile_list, player):
             y = platoon.final_position[1] + platoon.unit[j].final_position[1]
             plot_unit(platoon.unit[j], x, y, rotation)
             if platoon.unit[j].id == 7 and player.abducted:
+                # considering making an event to handle player deaths and stuff             
                 player.abducted = False
                 player.lives = player.lives - 1
                 player.position_x = WIDTH / 2
                 player.position_y = FIGHTER_Y
                 player.rotation = 0
+                player.boss_capture_id = None
 
 def main():
     run = True

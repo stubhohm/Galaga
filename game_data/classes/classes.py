@@ -120,6 +120,17 @@ class Menu:
         self.name = name
         self.selcected_option = selected_option
 
+class Event:
+    def __init__(self, name, start_time, duration):
+        self.name = name
+        self.start_time = start_time
+        self.duration = duration
+
+    def set_event_timer(self, event_name,start_time, duration):
+        self.name = event_name
+        self.start_time = start_time
+        self.duration = duration
+
 class Player:
     # attributes for the player
     def __init__(
@@ -129,13 +140,14 @@ class Player:
         sprite, 
         score, 
         position_x, 
-        double_fighter, 
-        active, 
+        active,
+        double_fighter = False,  
         kills = 0, 
         hits = 0, 
         shots_fired = 0,
         rotation = 0,
-        abducted = False
+        abducted = False,
+        boss_capture_id = None
         ):
         self.name = name
         self.lives = lives
@@ -156,6 +168,7 @@ class Player:
         self.shots_fired = shots_fired
         self.rotation = rotation
         self.abducted = abducted
+        self.boss_capture_id = boss_capture_id
 
 class FlightPath:
     def __init__(self, name, path_id, platoon, completed):

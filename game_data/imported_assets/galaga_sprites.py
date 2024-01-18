@@ -37,6 +37,8 @@ bosconian_image = [
 captured_fighter_image = [
     pygame.image.load("game_data//imported_assets//sprites//Aliens//captured_fighter_1.png"),
     pygame.image.load("game_data//imported_assets//sprites//Aliens//captured_fighter_1.png"),
+    pygame.image.load("game_data//imported_assets//sprites//Aliens//captured_fighter_1.png"),
+    pygame.image.load("game_data//imported_assets//sprites//Aliens//captured_fighter_1.png"),
 ]
 
 alien_missile_image = pygame.image.load("game_data//imported_assets//sprites//Aliens//alien_missile.png")

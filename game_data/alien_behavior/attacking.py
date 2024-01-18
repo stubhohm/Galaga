@@ -12,11 +12,16 @@ def fire_alien_missiles(unit,alien_missile_list):
         if HEIGHT * 3 / 8 < unit.position_y < HEIGHT * 7 / 8:
             alien_missile_list.missile = add_missile(alien_missile_list, unit)
 
-def get_random_unit(armada):
+def get_random_unit(armada, depth):
+    depth = depth + 1
+    if depth > 50:
+        a = None
+        b = None
+        return a, b
     a = random.randrange(0,(len(armada.platoon)))- 1
     b = random.randrange(0,(len(armada.platoon[a].unit)))- 1
     if armada.platoon[a].unit[b].hp == 0 or armada.platoon[a].unit[b].id == 7:
-        a, b = get_random_unit(armada)
+        a, b = get_random_unit(armada,depth)
     return a, b
 
 def make_unit_attacker(unit, armada):
@@ -29,16 +34,23 @@ def make_unit_attacker(unit, armada):
         shift_bezier_array(unit)
         unit.attack_flight_is_completed = False
         set_unit_score(unit,unit.attack_flight_is_completed)
-        armada.active_attackers = armada.active_attackers + 1
 
 def select_attackers(armada, time):
     # sets attack frequency
     if time % 90 == 0:
+        armada.active_attackers = 0
+        for i in (range(len(armada.platoon))):
+            for j in range(len(armada.platoon[i].unit)):
+                if armada.platoon[i].unit[j].attack_flight_is_completed == False:
+                    armada.active_attackers = armada.active_attackers  + 1
         if armada.active_attackers < armada.game_level + 3:
             if armada.active_attackers > 6:
                 return
+            depth = 0
             # recursively gets units until one works
-            a, b = get_random_unit(armada)
+            a, b = get_random_unit(armada, depth)
+            if not a:
+                return
             make_unit_attacker(armada.platoon[a].unit[b], armada)
             if len(armada.platoon[a].unit) > 4 and armada.platoon[a].unit[b].id == 3:
                 check_and_tow_captured_fighter(armada.platoon[a].unit[b], armada.platoon[a].unit[4], b)
@@ -52,8 +64,6 @@ def unit_attack_movement(platoon, unit, i, armada, alien_missile_list):
     if unit.attack_flight_is_completed == True:
         set_unit_score(unit, unit.attack_flight_is_completed)
         platoon.unit[i].path_time = 0
-        if unit.id != 7:
-            armada.active_attackers = armada.active_attackers - 1
     else:
         fire_alien_missiles(unit, alien_missile_list)
 

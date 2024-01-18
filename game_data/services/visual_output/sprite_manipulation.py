@@ -55,21 +55,23 @@ def scale_sprite(object, is_beam=False):
             object.sprite, (MISSILE_WIDTH, MISSILE_HEIGHT)
         )
     else:
-        if object.is_alien:
+        if object.is_fighter:
+            object.sprite = fighter_image[0]
+            if object.is_alien:
+                object.sprite = Alien_Image[6][0]
+            elif object.double_fighter:
+                object.sprite = fighter_image[1]
+            object.sprite = pygame.transform.scale(
+                object.sprite, (FIGHTER_WIDTH, FIGHTER_HEIGHT)
+                )
+        elif object.is_alien:
             sprite = Alien_Image[object.id - 1][object.image_in_cycle]
             object.sprite = pygame.transform.rotate(sprite, 0)
             object.sprite = pygame.transform.scale(
                 object.sprite, (ALIEN_WIDTH, ALIEN_HEIGHT)
             )
-            object.sprite = pygame.transform.rotate(object.sprite, object.rotation)
-        if object.is_fighter:
-            object.sprite = fighter_image[0]
-            if object.is_alien:
-                object.sprite = Alien_Image[6][0]
-            object.sprite = pygame.transform.scale(
-                object.sprite, (FIGHTER_WIDTH, FIGHTER_HEIGHT)
-                )
-            object.sprite = pygame.transform.rotate(object.sprite, object.rotation)
+        
+        object.sprite = pygame.transform.rotate(object.sprite, object.rotation)
 
 def main():
     print(MISSILE_HEIGHT)

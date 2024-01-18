@@ -4,7 +4,7 @@ from ....services.visual_output.draw_window import WINDOW
 from ....constants.CONSTANTS import FIGHTER_HEIGHT, FIGHTER_WIDTH, ALIEN_HEIGHT, ALIEN_WIDTH, FIGHTER_Y, WIDTH, HEIGHT
 from ....missile_tracking.missile_management import remove_missile
 from ....objects.alien_objects import AlienUnit
-from ....player.player_actions import increase_player_score
+from ....player.player_actions import increase_player_score, check_to_reclaim_captured_fighter
 from ....services.visual_output.sprite_manipulation import toggle_boss_galaga_sprite
 from ....alien_behavior.abucting import abduction_animation
 
@@ -15,12 +15,13 @@ def armada_defeated(armada):
     armada.is_defeated = True
 
 def platoon_defeated(armada, i):
-    if armada.platoon[i].is_defeated != True:
+    for i in range(len(armada.platoon)):
         for j in range(len(armada.platoon[i].unit)):
+            armada.platoon[i].is_defeated = True
             if armada.platoon[i].unit[j].hp != 0:
-                return
-        armada.platoon[i].is_defeated = True
-        armada_defeated(armada)
+                armada.platoon[i].is_defeated = False
+                break
+    armada_defeated(armada)
 
 def alien_takes_damage(unit, player):
     unit.hp = unit.hp - 1
@@ -58,9 +59,10 @@ def alien_takes_damage(unit, player):
 def alien_to_player_fighter_collision(alien_armada, player):
     contact = False
     for i in range(len(alien_armada.platoon)):
+        a = 0
+        if alien_armada.platoon[i].is_defeated:
+                continue
         for j in range(len(alien_armada.platoon[i].unit)):
-            if alien_armada.platoon[i].is_defeated:
-                break
             unit = alien_armada.platoon[i].unit[j]
             if unit.can_abduct and unit.position_y == 522:
                 check_abduction(player, alien_armada, i, j)
@@ -119,9 +121,12 @@ def check_abduction(player, armada, i ,j):
         < player.position_x 
         < unit.position_x + ALIEN_WIDTH):
         if 5.6 < unit.path_time < 8.4 or player.abducted:
-            player.abducted = True
-            if abduction_animation(player, unit, armada, i, j):
-                armada.platoon[i].unit[j].can_abduct = False
+            # prevents double capture
+            if not player.boss_capture_id or player.boss_capture_id == j:
+                player.abducted = True
+                player.boss_capture_id = j
+                if abduction_animation(player, unit, armada, i, j):
+                    armada.platoon[i].unit[j].can_abduct = False
 
 def player_collision_calculation(a, b, c, x, y):
     
@@ -138,6 +143,8 @@ def player_missile_to_alien_collision(player_missile_list, alien_armada, player)
     y = ALIEN_HEIGHT / 3
     x = ALIEN_WIDTH / 4
     for i in range(len(player_missile_list.missile)):
+        if i > len(player_missile_list.missile) -1:
+            continue
         missile = player_missile_list.missile[i]
         for j in range(len(alien_armada.platoon)):
             if alien_armada.platoon[j].is_defeated:
@@ -149,7 +156,8 @@ def player_missile_to_alien_collision(player_missile_list, alien_armada, player)
                         if unit.position_x + x > missile.position_x > unit.position_x - x:
                             remove_missile(player_missile_list, i)
                             alien_armada.platoon[j].unit[k] = alien_takes_damage(unit, player)
-                            platoon_defeated(alien_armada, j)
+                            check_to_reclaim_captured_fighter(alien_armada.platoon[j], alien_armada.platoon[j].unit[k], k, player)
+                            platoon_defeated(alien_armada,j)
 
 def main():
     collision = player_collision_calculation((64,0), (0,32), (0,-32), 18, 18)

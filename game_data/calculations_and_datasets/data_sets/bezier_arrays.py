@@ -210,10 +210,12 @@ def get_bezier_attack_pattern(unit):
         path = 2
         if id == 3:
                 path = 4
-                if random.randrange(0,10) > 0:
+                if random.randrange(1,10) > 7:
                     path = 3
                     unit.can_abduct = True
-        elif random.randrange(0,10) > 7:
+                else:
+                    unit.can_abduct = False
+        elif random.randrange(1,10) > 7:
             path = 1
 
     attack_pattern_path = copy.deepcopy(attack_pattern_bezier_points[path])

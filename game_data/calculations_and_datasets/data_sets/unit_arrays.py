@@ -75,6 +75,7 @@ platoon_final_position = [
 # sets how the units are offset from the platoons center point
 x = UNIT_OFFSET_X
 y = UNIT_OFFSET_Y
+
 unit_offset = [
     # offsets are either a grid shape
     # unit 1(-x,-y), unit 3 (+x, -y)

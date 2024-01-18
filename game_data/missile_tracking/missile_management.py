@@ -1,30 +1,50 @@
-from game_data.constants.CONSTANTS import HEIGHT, MISSILE_HEIGHT, FIGHTER_HEIGHT
+from game_data.constants.CONSTANTS import HEIGHT, MISSILE_HEIGHT, FIGHTER_HEIGHT, FIGHTER_WIDTH
 from game_data.classes.classes import Missile, AlienMissile
 from . .imported_assets.galaga_sprites import alien_missile_image, fighter_missile
 
 def add_missile(active_missile_list, shooter):
     # move all missiles up one spot in the array
-    new_active_missile_list = [None] * (len(active_missile_list.missile) + 1)
+    if shooter.is_fighter:
+        if shooter.double_fighter:
+            gap = 2
+        else: 
+            gap = 1
+    else:
+        gap = 1
+    new_active_missile_list = [None] * (len(active_missile_list.missile) + gap)
     for i in range(len(active_missile_list.missile)):
         new_active_missile_list[i + 1] = active_missile_list.missile[i]
-
     if active_missile_list.is_player_list:
-        new_missile = Missile(fighter_missile, -10, -10, False)
-        new_missile.position_y = shooter.position_y - FIGHTER_HEIGHT / 6
+        if not shooter.double_fighter:
+            new_missile = Missile(fighter_missile, -10, -10, False)
+            new_missile.position_y = shooter.position_y - FIGHTER_HEIGHT / 6
+            new_active_missile_list[0] = new_missile
+            new_missile.position_x = shooter.position_x
+        else:
+            flip = 1
+            for i in range(2):
+                new_missile = Missile(fighter_missile, -10, -10, False)
+                new_missile.position_y = shooter.position_y - FIGHTER_HEIGHT / 6
+                new_missile.position_x = shooter.position_x + flip * FIGHTER_WIDTH / 4
+                new_active_missile_list[i] = new_missile
+                flip = -1
     else:
         d_x  = 1
         if shooter.rotation > 0:
             d_x = d_x * -1
         new_missile = AlienMissile(alien_missile_image, -10, -10, d_x)
         new_missile.position_y = shooter.position_y
-    new_active_missile_list[0] = new_missile
-    new_missile.position_x = shooter.position_x
+        new_active_missile_list[0] = new_missile
+        
     return new_active_missile_list
 
 def clean_missile_list(active_missile_list):
     for i in range(len(active_missile_list.missile)):
+        if not active_missile_list.missile[i]:
+            active_missile_list.missile = active_missile_list.missile[:i]
+            break
         if active_missile_list.missile[i].position_y < -(2 * MISSILE_HEIGHT) or (
-            active_missile_list.missile[i].position_y > HEIGHT + (2 * MISSILE_HEIGHT)
+            active_missile_list.missile[i].position_y > HEIGHT + (MISSILE_HEIGHT)
         ):
             # truncate off values that are off screen
             active_missile_list.missile = active_missile_list.missile[:i]
@@ -42,7 +62,10 @@ def remove_missile(missile_list, missile_rank):
     for i in range(missile_rank, len(missile_list.missile) - 1 ):
         holding_missile = missile_list.missile[i + 1]
         missile_list.missile[i + 1] = missile_list.missile[i]
-        missile_list.missile[i] = holding_missile
+        missile_list.missile[i] = holding_missile 
+    missile_list.missile.pop()
+    a = 0
+
 
 if __name__ == "__main__":
     print(
