@@ -25,9 +25,7 @@ def get_random_unit(armada, depth):
     return a, b
 
 def make_unit_attacker(unit, armada):
-    if unit.hp == 0:
-        return
-    if unit.attack_flight_is_completed != True:
+    if unit.hp == 0 or unit.attack_flight_is_completed != True:
         return
     if unit.entry_flight_is_completed and unit.station_flight_is_completed:
         unit.path = get_bezier_attack_pattern(unit)

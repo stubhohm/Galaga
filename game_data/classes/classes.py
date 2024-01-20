@@ -2,10 +2,11 @@ from ..constants.CONSTANTS import WIDTH, HEIGHT, FIGHTER_Y, MISSILE_SPEED, FIGHT
 
 
 class AlienArmada:  # defines the entire alien fleet for a level
-    def __init__(self, platoon, is_defeated = False, active_attackers = 0, game_level = 0):
+    def __init__(self, platoon, is_defeated = False, active_attackers = 0, hatched_fighters = False, game_level = 0):
         self.platoon = platoon
         self.is_defeated = is_defeated
         self.active_attackers = active_attackers
+        self.hatched_fighters = hatched_fighters
         self.game_level = game_level
 
 class AlienPlatoon:  # defines a specific group of eight aliens

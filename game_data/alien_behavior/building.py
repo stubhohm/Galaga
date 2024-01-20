@@ -3,6 +3,11 @@ from ..classes.classes import AlienArmada, AlienPlatoon, AlienUnit
 from ..calculations_and_datasets.data_sets.unit_arrays import unit_arrays, platoon_final_position, platoon_expansion_multiple, start_time, flight_paths, unit_offset
 
 # remaining class atributes left as default and modified later
+def build_challenge_stage(level, time):
+    challenge_stage = int(level / 4)
+    a = 0
+
+
 def build_new_unit(unit_type, unit_rank, platoon_rank):
     if unit_type == 1:
         unit = AlienUnit(
