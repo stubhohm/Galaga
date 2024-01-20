@@ -41,6 +41,35 @@ WAVE_STARTS = [
 SECOND_PLATOON_DELAY = 32
 START_DELAY = 200
 
+ALHAPHABET = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+]
+
 def main():
     print("seems pretty constant to me")
 

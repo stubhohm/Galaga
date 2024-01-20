@@ -8,7 +8,7 @@ from .movement import find_position_on_curve, set_unit_score, check_and_tow_capt
 from ..missile_tracking.missile_management import add_missile
 
 def fire_alien_missiles(unit,alien_missile_list):
-    if unit.rotation == 356 or unit.rotation == 4:
+    if abs(int(unit.rotation)) == 356 or abs(int(unit.rotation == 4)):
         if HEIGHT * 3 / 8 < unit.position_y < HEIGHT * 7 / 8:
             alien_missile_list.missile = add_missile(alien_missile_list, unit)
 
@@ -39,12 +39,14 @@ def select_attackers(armada, time):
     # sets attack frequency
     if time % 90 == 0:
         armada.active_attackers = 0
-        for i in (range(len(armada.platoon))):
-            for j in range(len(armada.platoon[i].unit)):
-                if armada.platoon[i].unit[j].attack_flight_is_completed == False:
+        for platoon in list(armada.platoon):
+            if platoon.is_defeated:
+                continue
+            for unit in list(platoon.unit):
+                if unit.attack_flight_is_completed == False:
                     armada.active_attackers = armada.active_attackers  + 1
-        if armada.active_attackers < armada.game_level + 3:
-            if armada.active_attackers > 6:
+        if armada.active_attackers < armada.level + 3:
+            if armada.active_attackers > 15:
                 return
             depth = 0
             # recursively gets units until one works

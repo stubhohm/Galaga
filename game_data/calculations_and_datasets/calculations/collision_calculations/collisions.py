@@ -15,13 +15,11 @@ def armada_defeated(armada):
     armada.is_defeated = True
 
 def platoon_defeated(armada, i):
-    for i in range(len(armada.platoon)):
-        for j in range(len(armada.platoon[i].unit)):
-            armada.platoon[i].is_defeated = True
-            if armada.platoon[i].unit[j].hp != 0:
-                armada.platoon[i].is_defeated = False
-                break
-    armada_defeated(armada)
+    for j in range(len(armada.platoon[i].unit)):
+        armada.platoon[i].is_defeated = True
+        if armada.platoon[i].unit[j].hp != 0:
+            armada.platoon[i].is_defeated = False
+            break
 
 def alien_takes_damage(unit, player):
     unit.hp = unit.hp - 1
@@ -60,15 +58,18 @@ def alien_to_player_fighter_collision(alien_armada, player):
     contact = False
     for i in range(len(alien_armada.platoon)):
         a = 0
+        platoon_defeated(alien_armada, i)
         if alien_armada.platoon[i].is_defeated:
                 continue
         for j in range(len(alien_armada.platoon[i].unit)):
             unit = alien_armada.platoon[i].unit[j]
             if unit.can_abduct and unit.position_y == 522:
-                check_abduction(player, alien_armada, i, j)
+                contact = check_abduction(player, alien_armada, i, j)
+                return contact
             if unit.position_y:
                 if unit.position_y > FIGHTER_Y - FIGHTER_HEIGHT / 2:
                     return convert_to_coordinates(unit, player)
+    armada_defeated(alien_armada)
 
 def alien_missile_to_player_fighter_collision(alien_missile_list, player):
     for i in range(len(alien_missile_list.missile)):
@@ -86,10 +87,10 @@ def collision_check(player_missile_list,player, alien_missile_list, alien_armada
         if len(alien_missile_list.missile) > 0:
             contact = alien_missile_to_player_fighter_collision(alien_missile_list, player)
             if contact:
-                a = 0 # return player death
+                player.hp = 0
     contact = alien_to_player_fighter_collision(alien_armada, player)
     if contact and player.abducted != True:
-        a = 0 # return player death
+        player.hp = 0
 
 def convert_to_coordinates(unit, player):
     # the 4 is to shrink it since there is a good amount of white space on the sprite drawings
@@ -103,24 +104,29 @@ def convert_to_coordinates(unit, player):
     left_wing_tip_x = player.position_x - FIGHTER_WIDTH / 4
     left_wing_tip_y = right_wing_tip_y = player.position_y + FIGHTER_HEIGHT / 6
     right_wing_tip_x = player.position_x + FIGHTER_WIDTH / 4
+    if player.double_fighter:
+        left_wing_tip_x = player.position_x - FIGHTER_WIDTH / 2
+        right_wing_tip_x = player.position_x + FIGHTER_WIDTH / 2
     a = (nose_tip_x, nose_tip_y)
     b = (left_wing_tip_x, left_wing_tip_y)
     c = (right_wing_tip_x, right_wing_tip_y)
-    # pygame.draw.circle(WINDOW, RED,a,3)
-    # pygame.draw.circle(WINDOW, WHITE,b,3)
-    # pygame.draw.circle(WINDOW, YELLOW,c,3)
-    # pygame.draw.circle(WINDOW, BLUE,(x,y),3)
+    # pygame.draw.circle(WINDOW, RED,a,5)
+    # pygame.draw.circle(WINDOW, WHITE,b,5)
+    # pygame.draw.circle(WINDOW, YELLOW,c,5)
+    # pygame.draw.circle(WINDOW, BLUE,(x,y),5)
     # pygame.display.update()
     return player_collision_calculation(a, b, c, x, y)
 
 def check_abduction(player, armada, i ,j):
     unit = armada.platoon[i].unit[j]
     if not isinstance(player.position_x,(int,float)):
-        return
+        return False
+    if player.double_fighter:
+        return True
     elif (unit.position_x - ALIEN_WIDTH 
         < player.position_x 
         < unit.position_x + ALIEN_WIDTH):
-        if 5.6 < unit.path_time < 8.4 or player.abducted:
+        if 5.4 < unit.path_time < 8.2 or player.abducted:
             # prevents double capture
             if not player.boss_capture_id or player.boss_capture_id == j:
                 player.abducted = True
@@ -156,8 +162,7 @@ def player_missile_to_alien_collision(player_missile_list, alien_armada, player)
                         if unit.position_x + x > missile.position_x > unit.position_x - x:
                             remove_missile(player_missile_list, i)
                             alien_armada.platoon[j].unit[k] = alien_takes_damage(unit, player)
-                            check_to_reclaim_captured_fighter(alien_armada.platoon[j], alien_armada.platoon[j].unit[k], k, player)
-                            platoon_defeated(alien_armada,j)
+                            check_to_reclaim_captured_fighter(alien_armada.platoon[j], alien_armada.platoon[j].unit[k], k)
 
 def main():
     collision = player_collision_calculation((64,0), (0,32), (0,-32), 18, 18)

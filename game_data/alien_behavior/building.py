@@ -38,7 +38,7 @@ def build_new_unit(unit_type, unit_rank, platoon_rank):
         unit.final_position = unit_offset[0][unit_rank]
     return unit
 
-def build_alien_platoon(i):
+def build_alien_platoon(i, time):
     platoon = [0, 1, 2, 3]#
     for j in range(len(platoon)):
         unit = unit_selection(i, j)
@@ -49,7 +49,7 @@ def build_alien_platoon(i):
                     flight_path = flight_paths[k]
     platoon = AlienPlatoon(
         i, 
-        platoon, start_time[i],
+        platoon, start_time[i] + time,
         0, # path_time set to zero
         platoon_final_position[i], 
         flight_path, 
@@ -59,10 +59,11 @@ def build_alien_platoon(i):
         )
     return platoon
 
-def build_alien_armada():
+def build_alien_armada(level, time):
     armada = AlienArmada([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], False)#
     for i in range(len(armada.platoon)):
-        armada.platoon[i] = build_alien_platoon(i)
+        armada.platoon[i] = build_alien_platoon(i, time)
+    armada.level = level
     return armada
 
 def unit_selection(i, j):

@@ -1,4 +1,4 @@
-from game_data.calculations_and_datasets.calculations.bezier_calculations.bezier_curve import *
+from game_data.events.events import *
 
 """
 to test any file change the import directory path and run this file

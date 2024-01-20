@@ -115,21 +115,31 @@ class Menu:
     def __init__(
         self,
         name,
-        selected_option,
+        text = "",
+        choice_1 = 0,
+        choice_2 = 0,
+        choice_3 = 0,
+        choice_4 = 0,
+        select = False
     ):
         self.name = name
-        self.selcected_option = selected_option
+        self.text = text
+        self.choice_1 = choice_1
+        self.choice_2 = choice_2
+        self.choice_3 = choice_3
+        self.choice_4 = choice_4
+        self.select = select
 
 class Event:
-    def __init__(self, name, start_time, duration):
+    def __init__(self, name, id, start_time, duration, end_time = 0):
         self.name = name
+        self.id = id
         self.start_time = start_time
         self.duration = duration
+        self.end_time = end_time
 
-    def set_event_timer(self, event_name,start_time, duration):
-        self.name = event_name
-        self.start_time = start_time
-        self.duration = duration
+    def set_event_timer(self, duration):
+        self.end_time = duration + self.start_time
 
 class Player:
     # attributes for the player
@@ -138,16 +148,20 @@ class Player:
         name, 
         lives, 
         sprite, 
-        score, 
-        position_x, 
-        active,
+        score = 0, 
+        position_x = WIDTH / 2,
+        hp = 1,
         double_fighter = False,  
         kills = 0, 
         hits = 0, 
         shots_fired = 0,
+        pause = False,
         rotation = 0,
         abducted = False,
-        boss_capture_id = None
+        boss_capture_id = None,
+        image_in_cycle = 0,
+        extra_life = False
+
         ):
         self.name = name
         self.lives = lives
@@ -156,8 +170,9 @@ class Player:
         # y position is a constant
         self.position_x = position_x
         self.position_y = FIGHTER_Y
+        self.hp = hp
         self.double_fighter = double_fighter
-        self.active = active
+        self.pause = pause
         self.rotation = 0
         self.is_alien = False
         self.is_fighter = True
@@ -169,6 +184,20 @@ class Player:
         self.rotation = rotation
         self.abducted = abducted
         self.boss_capture_id = boss_capture_id
+        self.image_in_cycle = image_in_cycle
+        self.extra_life = extra_life
+
+    def reset_player(self):
+        self.hp = 1
+        self.position_x = WIDTH /2
+        self.position_y = FIGHTER_Y
+        self.rotation = 0
+        self.abducted = False
+        self.pause = True
+        self.double_fighter = False
+        self.boss_capture_id = None
+        self.image_in_cycle = 0
+            
 
 class FlightPath:
     def __init__(self, name, path_id, platoon, completed):

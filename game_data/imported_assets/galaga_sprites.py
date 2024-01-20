@@ -91,6 +91,8 @@ Alien_Image = [
     alien_explosion,
 ]
 
+galaga_logo = pygame.image.load("game_data//imported_assets//sprites//Galaga_logo.png")
+
 # fighter images
 fighter_image = [
     pygame.image.load("game_data//imported_assets//sprites//Fighter//fighter.png"),
@@ -105,6 +107,7 @@ fighter_explosion = [
     pygame.image.load("game_data//imported_assets//sprites//Fighter//fighter_explosion_3.png"),
     pygame.image.load("game_data//imported_assets//sprites//Fighter//fighter_explosion_4.png"),
     pygame.image.load("game_data//imported_assets//sprites//Fighter//fighter_explosion_5.png"),
+    pygame.image.load("game_data//imported_assets//sprites//blank.png"),
 ]
 
 if __name__ == "__main__":

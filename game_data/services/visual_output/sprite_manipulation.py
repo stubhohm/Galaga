@@ -23,27 +23,28 @@ def toggle_boss_galaga_sprite(boss_galaga):
             boss_galaga.image_in_cycle = 2
 
 def toggle_bug_sprite(unit):
-    if unit.image_in_cycle == 0:
-        unit.image_in_cycle = 1
-    else:
-        unit.image_in_cycle = 0
+        if unit.image_in_cycle == 0:
+            unit.image_in_cycle = 1
+        else:
+            unit.image_in_cycle = 0
 
-def toggle_alien_explosion(explosion):
-    explosion.image_in_cycle = explosion.image_in_cycle + 1
-    if explosion.image_in_cycle > 5:
-        explosion.image_in_cycle = 5
+def cycle_explosion(explosion, time):
+    if time % 6 == 0:
+        explosion.image_in_cycle = explosion.image_in_cycle + 1
+        if explosion.image_in_cycle > 5:
+            explosion.image_in_cycle = 5
 
 def toggle_alien_sprite_images(platoon, time):
-    if time % 90 == 0:
-        for i in range(len(platoon.unit)):
-            if platoon.unit[i].id == 3:
-                toggle_boss_galaga_sprite(platoon.unit[i])
-            elif platoon.unit[i].id != 9:
-                toggle_bug_sprite(platoon.unit[i])
-    if time % 6 == 0:
-        for i in range(len(platoon.unit)):
-            if platoon.unit[i].id == 9: 
-                toggle_alien_explosion(platoon.unit[i])
+    time_90 = time % 90 == 0
+    time_6 = time % 6 == 0
+    for i in range(len(platoon.unit)):
+        if platoon.unit[i].id == 3 and time_90:
+            toggle_boss_galaga_sprite(platoon.unit[i])
+        elif platoon.unit[i].id != 9 and time_90:
+            toggle_bug_sprite(platoon.unit[i])
+        elif platoon.unit[i].id == 9 and time_6:
+            platoon.unit[i].attack_flight_is_completed = True 
+            cycle_explosion(platoon.unit[i], time)
 
 def scale_sprite(object, is_beam=False):
     if is_beam:
@@ -57,7 +58,9 @@ def scale_sprite(object, is_beam=False):
     else:
         if object.is_fighter:
             object.sprite = fighter_image[0]
-            if object.is_alien:
+            if object.hp == 0:
+                object.sprite = fighter_explosion[object.image_in_cycle]
+            elif object.is_alien:
                 object.sprite = Alien_Image[6][0]
             elif object.double_fighter:
                 object.sprite = fighter_image[1]

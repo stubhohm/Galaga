@@ -14,15 +14,13 @@ def alien_explodes(unit, armada):
     x = unit.position_x
     plot_unit(unit, x, y, 0)
 
-def alien_armada_behavior(armada, alien_missile_list, time, player):
+def alien_armada_update(armada, alien_missile_list, time, player):
     for i in range(len(armada.platoon)):
         toggle_alien_sprite_images(armada.platoon[i], time)
-        if armada.is_defeated == True:
+        if armada.is_defeated == True or armada.platoon[i].is_defeated == True:
             continue
-        if player.abducted != True:
-            select_attackers(armada, time)
-        if armada.platoon[i].is_defeated == True:
-            continue          
+        if not player.pause:
+            select_attackers(armada, time)          
         platoon_behavior(armada.platoon[i], i, time, armada, alien_missile_list, player)
         armada_expand_contract(armada.platoon[i], time)
             
@@ -52,8 +50,6 @@ def platoon_behavior(platoon, i, time, armada, alien_missile_list, player):
             plot_unit(platoon.unit[j], x, y, rotation)
             if platoon.unit[j].id == 7 and player.abducted:
                 # considering making an event to handle player deaths and stuff             
-                player.abducted = False
-                player.lives = player.lives - 1
                 player.position_x = WIDTH / 2
                 player.position_y = FIGHTER_Y
                 player.rotation = 0

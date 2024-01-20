@@ -4,7 +4,7 @@ from ..imported_assets.galaga_sprites import tractor_beam
 from ..constants.CONSTANTS import FPS, FIGHTER_HEIGHT
 from ..classes.classes import AlienUnit
 
-def alien_abduction_animation(abducted,abductor, armada, i, j):
+def alien_abduction_animation(abducted, abductor, armada, i, j):
     d_x = (abductor.position_x - abducted.position_x - 1) * 5
     d_y = abductor.position_y + 32 - abducted.position_y
     if abs(d_y) > abs(d_x):
@@ -126,7 +126,7 @@ def capture_fighter_animaiton(abducted, abductor, armada, i, j):
     else:
         abducted.rotation = int(abducted.rotation - 20)
 
-def abduction_animation(abducted,abductor, armada, i, j):
+def abduction_animation(abducted, abductor, armada, i, j):
     # rotate one degree
     if abductor.is_alien:
         alien_abduction_animation(abducted,abductor, armada, i, j)

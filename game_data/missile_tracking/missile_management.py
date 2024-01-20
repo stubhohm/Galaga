@@ -13,27 +13,24 @@ def add_missile(active_missile_list, shooter):
         gap = 1
     new_active_missile_list = [None] * (len(active_missile_list.missile) + gap)
     for i in range(len(active_missile_list.missile)):
-        new_active_missile_list[i + 1] = active_missile_list.missile[i]
+        new_active_missile_list[i + gap] = active_missile_list.missile[i]
     if active_missile_list.is_player_list:
+        missile_y = shooter.position_y - FIGHTER_HEIGHT / 6
         if not shooter.double_fighter:
-            new_missile = Missile(fighter_missile, -10, -10, False)
-            new_missile.position_y = shooter.position_y - FIGHTER_HEIGHT / 6
+            new_missile = Missile(fighter_missile, shooter.position_x, missile_y, False)
             new_active_missile_list[0] = new_missile
-            new_missile.position_x = shooter.position_x
         else:
             flip = 1
             for i in range(2):
-                new_missile = Missile(fighter_missile, -10, -10, False)
-                new_missile.position_y = shooter.position_y - FIGHTER_HEIGHT / 6
-                new_missile.position_x = shooter.position_x + flip * FIGHTER_WIDTH / 4
+                missile_x = shooter.position_x + flip * FIGHTER_WIDTH / 4
+                new_missile = Missile(fighter_missile, missile_x, missile_y, False)
                 new_active_missile_list[i] = new_missile
                 flip = -1
     else:
         d_x  = 1
         if shooter.rotation > 0:
             d_x = d_x * -1
-        new_missile = AlienMissile(alien_missile_image, -10, -10, d_x)
-        new_missile.position_y = shooter.position_y
+        new_missile = AlienMissile(alien_missile_image, shooter.position_x, shooter.position_y, d_x)
         new_active_missile_list[0] = new_missile
         
     return new_active_missile_list
