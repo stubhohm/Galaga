@@ -20,7 +20,9 @@ def draw_menu(menu_selection, star_clusters, time, key_released, score):
     for i in range(len(star_clusters)):
         locate_stars(star_clusters[i], time)
     menu_selection = menu_selecting(key_released, time, WINDOW, menu_selection, score)
-    return menu_selection
+    if menu_selection == "Play":
+        time = 0
+    return menu_selection, time
 
 def draw_stars(star_clusters, time):
     for i in range(len(star_clusters)):

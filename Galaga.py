@@ -45,7 +45,7 @@ def main():
             if player.lives == 0 and key_released == [pygame.K_RETURN][0]:
                 menu_selection = "High Score Menu"
         else:
-            menu_selection = draw_menu(menu_selection, star_clusters, time, key_released, player.score)
+            menu_selection, time = draw_menu(menu_selection, star_clusters, time, key_released, player.score)
         pygame.display.update()
         time = time + 1
 

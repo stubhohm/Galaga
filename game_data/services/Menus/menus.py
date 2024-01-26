@@ -82,7 +82,8 @@ def draw_title_menu(menu, time, key_released, WINDOW):
         if time % 40 > 15:
             draw_text(WINDOW, "Play Galaga", FONTS.text_font, WHITE, WIDTH/2, HEIGHT * 4 / 8, True)
         if key_released == [pygame.K_RETURN][0]:
-            return "Play" 
+            time = 0
+            return "Play"
     if choice == 1:
         draw_text(WINDOW, "Play Galaga", FONTS.text_font, WHITE, WIDTH/2, HEIGHT * 4 / 8, True)
         if time % 40 > 15:
