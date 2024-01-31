@@ -12,16 +12,17 @@ def fire_alien_missiles(unit,alien_missile_list):
         if HEIGHT * 3 / 8 < unit.position_y < HEIGHT * 7 / 8:
             alien_missile_list.missile = add_missile(alien_missile_list, unit)
 
-def get_random_unit(armada, depth):
-    depth = depth + 1
-    if depth > 50:
-        a = None
-        b = None
-        return a, b
+def get_random_unit(armada, depth = 0):
     a = random.randrange(0,(len(armada.platoon)))- 1
     b = random.randrange(0,(len(armada.platoon[a].unit)))- 1
-    if armada.platoon[a].unit[b].hp == 0 or armada.platoon[a].unit[b].id == 7:
-        a, b = get_random_unit(armada,depth)
+    while armada.platoon[a].unit[b].hp == 0:
+        depth += 1
+        if depth == 50:
+            a = None
+            b = None
+            return a, b
+        a = random.randrange(0,(len(armada.platoon)))- 1
+        b = random.randrange(0,(len(armada.platoon[a].unit)))- 1
     return a, b
 
 def make_unit_attacker(unit, armada):

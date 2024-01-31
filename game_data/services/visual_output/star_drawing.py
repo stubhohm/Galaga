@@ -74,7 +74,7 @@ def generate_stars():
         for j in range(x):
             close_stars_array[i][j] = fill_in_array(j, i, close_stars_array, 0, 125, 10)
             medium_stars_array[i][j] = fill_in_array(j, i, medium_stars_array, 0, 65,5)
-            far_stars_array[i][j] = fill_in_array(j, i, medium_stars_array, 0, 10,2)
+            far_stars_array[i][j] = fill_in_array(j, i, far_stars_array, 0, 10, 2)
     close_stars.array = close_stars_array
     medium_stars.array = medium_stars_array
     far_stars.array = far_stars_array
